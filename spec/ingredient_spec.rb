@@ -17,4 +17,15 @@ describe(Ingredient) do
     test_ingredient.categories << test_category
     expect(test_ingredient.categories).to eq([test_category])
   end
+
+  describe('#combinations') do
+    it('returns a list of ingredients that go with the specified ingredient') do
+      ingredient1 = create_ingredient
+      ingredient2 = create_ingredient
+      ingredient1.ingredients << ingredient2
+      ingredient2.ingredients << ingredient1
+      expect(ingredient1.ingredients).to eq([ingredient2])
+      expect(ingredient2.ingredients).to eq([ingredient1])
+    end
+  end
 end
