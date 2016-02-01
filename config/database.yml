@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  database: concoct_development
+
+test:
+  adapter: postgresql
+  database: concoct_test
