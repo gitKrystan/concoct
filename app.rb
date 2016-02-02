@@ -10,11 +10,32 @@ end
 
 # CREATE cocktail
 get '/cocktails/new' do
-  @primaries = Ingredient.all
+  @primaries = Category.ingredients_by('Primary')
+  @secondaries = Category.ingredients_by('Secondary')
+  @sweeteners = Category.ingredients_by('Sweetener')
+  @acids = Category.ingredients_by('Acid')
+  @mixers = Category.ingredients_by('Mixer')
+  @garnishes = Category.ingredients_by('Garnish')
+  @aromatics = Category.ingredients_by('Aromatic')
   erb :cocktail_form
 end
 
 post '/cocktails' do
+  primary_id = params[:primary]
+  secondary_id = params[:secondary]
+  sweetener_id = params[:sweetener]
+  acid_id = params[:acid]
+  mixer_id = params[:mixer]
+  garnish_id = params[:garnish]
+  aromatic_id = params[:aromatic]
+
+  @primary = Ingredient.find(primary_id.to_i).name unless primary_id == "None"
+  @secondary = Ingredient.find(secondary_id.to_i).name unless secondary_id == "None"
+  @sweetener = Ingredient.find(sweetener_id.to_i).name unless sweetener_id == "None"
+  @acid = Ingredient.find(acid_id.to_i).name unless acid_id == "None"
+  @mixer = Ingredient.find(mixer_id.to_i).name unless mixer_id == "None"
+  @garnish = Ingredient.find(garnish_id.to_i).name unless garnish_id == "None"
+  @aromatic = Ingredient.find(aromatic_id.to_i).name unless aromatic_id == "None"
   erb :cocktail
 end
 
@@ -81,11 +102,16 @@ end
 
 helpers do
   def options(list, param_name)
-    html = "<select class='form-control' name='#{param_name}'>"
+    html = "<select class='form-control' name='#{param_name}'>\n \
+      <option>None</option>"
     list.each do |item|
       html << "<option value='#{item.id}'>#{item.name}</option>"
     end
     html << "</select>"
     html
+  end
+
+  def ingredient_entry(ingredient, amount)
+    "<h5>#{amount} #{ingredient}</h5>"
   end
 end

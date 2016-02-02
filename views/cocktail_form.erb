@@ -1,3 +1,35 @@
 <h1>Create a New Cocktail</h1>
 
-<%= options(@primaries, "primary") %>
+<form action="/cocktails" method="post">
+  <div class="form-group">
+    <label for="primary">Select a primary liquor:</label>
+    <%= options(@primaries, "primary") %>
+  </div>
+  <div class="form-group">
+    <label for="secondary">Select a secondary liquor:</label>
+    <%= options(@secondaries, "secondary") %>
+  </div>
+  <div class="form-group">
+    <label for="sweetener">Select a sweetener:</label>
+    <%= options(@sweeteners, "sweetener") %>
+  </div>
+  <div class="form-group">
+    <label for="acid">Select an acid:</label>
+    <%= options(@acids, "acid") %>
+  </div>
+  <div class="form-group">
+    <label for="mixer">Select a mixer:</label>
+    <%= options(@mixers, "mixer") %>
+  </div>
+  <div class="form-group">
+    <label for="aromatic">Select an aromatic:</label>
+    <%= options(@aromatics, "aromatic") %>
+  </div>
+  <div class="form-group">
+    <label for="garnish">Select a garnish:</label>
+    <%= options(@garnishes, "garnish") %>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">CONCOCT</button>
+  </div>
+</form>
