@@ -28,21 +28,7 @@ end
 
 post '/cocktails' do
   cocktail = Cocktail.create(name: "Temporary")
-  primary = Ingredient.find_unless_none(params[:primary])
-  secondary = Ingredient.find_unless_none(params[:secondary])
-  sweetener = Ingredient.find_unless_none(params[:sweetener])
-  acid = Ingredient.find_unless_none(params[:acid])
-  mixer = Ingredient.find_unless_none(params[:mixer])
-  garnish = Ingredient.find_unless_none(params[:garnish])
-  aromatic = Ingredient.find_unless_none(params[:aromatic])
-
-  cocktail.ingredients << primary unless primary.nil?
-  cocktail.ingredients << secondary unless secondary.nil?
-  cocktail.ingredients << sweetener unless sweetener.nil?
-  cocktail.ingredients << acid unless acid.nil?
-  cocktail.ingredients << mixer unless mixer.nil?
-  cocktail.ingredients << garnish unless garnish.nil?
-  cocktail.ingredients << aromatic unless aromatic.nil?
+  add_ingredients(cocktail, params)
 
   redirect "/cocktails/#{cocktail.id}/edit"
 end
@@ -81,22 +67,7 @@ end
 patch '/cocktails/:id' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
-
-  primary = Ingredient.find_unless_none(params[:primary])
-  secondary = Ingredient.find_unless_none(params[:secondary])
-  sweetener = Ingredient.find_unless_none(params[:sweetener])
-  acid = Ingredient.find_unless_none(params[:acid])
-  mixer = Ingredient.find_unless_none(params[:mixer])
-  garnish = Ingredient.find_unless_none(params[:garnish])
-  aromatic = Ingredient.find_unless_none(params[:aromatic])
-
-  cocktail.ingredients << primary unless primary.nil?
-  cocktail.ingredients << secondary unless secondary.nil?
-  cocktail.ingredients << sweetener unless sweetener.nil?
-  cocktail.ingredients << acid unless acid.nil?
-  cocktail.ingredients << mixer unless mixer.nil?
-  cocktail.ingredients << garnish unless garnish.nil?
-  cocktail.ingredients << aromatic unless aromatic.nil?
+  add_ingredients(cocktail, params)
 
   redirect "/cocktails/#{id}/edit"
 end
@@ -213,5 +184,23 @@ helpers do
 
   def ingredient_entry(ingredient, amount)
     "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
+  end
+
+  def add_ingredients(cocktail, params)
+    primary = Ingredient.find_unless_none(params[:primary])
+    secondary = Ingredient.find_unless_none(params[:secondary])
+    sweetener = Ingredient.find_unless_none(params[:sweetener])
+    acid = Ingredient.find_unless_none(params[:acid])
+    mixer = Ingredient.find_unless_none(params[:mixer])
+    garnish = Ingredient.find_unless_none(params[:garnish])
+    aromatic = Ingredient.find_unless_none(params[:aromatic])
+
+    cocktail.ingredients << primary unless primary.nil?
+    cocktail.ingredients << secondary unless secondary.nil?
+    cocktail.ingredients << sweetener unless sweetener.nil?
+    cocktail.ingredients << acid unless acid.nil?
+    cocktail.ingredients << mixer unless mixer.nil?
+    cocktail.ingredients << garnish unless garnish.nil?
+    cocktail.ingredients << aromatic unless aromatic.nil?
   end
 end
