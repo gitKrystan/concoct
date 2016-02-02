@@ -15,10 +15,15 @@ require('./app')
 RSpec.configure do |config|
   config.after(:each) do
     Category.all().each() do |category|
-      if category.id > 7
-        category.destroy()
-      end
+      category.destroy()
     end
+    Category.create(name: "Primary")
+    Category.create(name: "Secondary")
+    Category.create(name: "Sweetener")
+    Category.create(name: "Acid")
+    Category.create(name: "Mixer")
+    Category.create(name: "Garnish")
+    Category.create(name: "Aromatic")       
     Ingredient.all().each() do |ingredient|
       ingredient.destroy()
     end
