@@ -8,7 +8,11 @@ Dir[File.dirname(__FILE__) + '/../lib/*.rb'].each { |file| require file }
 
 require('capybara/rspec')
 Capybara.app = Sinatra::Application
-
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+Capybara.javascript_driver = :chrome
+Capybara.current_driver = Capybara.javascript_driver
 set(:show_exceptions, false)
 require('./app')
 

@@ -13,6 +13,7 @@ get '/cocktails/new' do
   @route_type = 'post'
   @route = '/cocktails'
   @ingredients = []
+  @cocktail = Cocktail.new
   @primaries = Category.ingredients_by('Primary')
   @secondaries = Category.ingredients_by('Secondary')
   @sweeteners = Category.ingredients_by('Sweetener')
@@ -46,17 +47,20 @@ end
 
 # READ cocktail
 get '/cocktails/:id' do
+  id = params[:id].to_i
+  @cocktail = Cocktail.find(id)
+  @ingredients = @cocktail.ingredients
   erb :cocktail
 end
 
 # UPDATE cocktail
 get '/cocktails/:id/edit' do
   id = params[:id].to_i
-  cocktail = Cocktail.find(id)
+  @cocktail = Cocktail.find(id)
   @route_type = 'patch'
   @route = "/cocktails/#{id}"
-  @ingredients = cocktail.ingredients
 
+  @ingredients = @cocktail.ingredients
   combo_ingredients = @ingredients.to_a.shift.ingredients
   @ingredients.each do |ingredient|
     combo_ingredients = ingredient.ingredients & combo_ingredients
@@ -93,6 +97,14 @@ patch '/cocktails/:id' do
   cocktail.ingredients << aromatic unless aromatic.nil?
 
   redirect "/cocktails/#{id}/edit"
+end
+
+patch '/cocktails/:id/name' do
+  id = params[:id].to_i
+  cocktail = Cocktail.find(id)
+  cocktail.update(name: params[:name])
+
+  redirect "/cocktails/#{id}"
 end
 
 # TODO: DELETE cocktail

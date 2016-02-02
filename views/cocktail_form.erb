@@ -5,35 +5,32 @@
     <form action="<%= @route %>" method="post">
       <input hidden name="_method" value="<%= @route_type %>">
       <div class="form-group">
-        <label for="primary">Select a primary liquor:</label>
+        <label for="primary">Add a primary liquor:</label>
         <%= options(@primaries, "primary", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="secondary">Select a secondary liquor:</label>
+        <label for="secondary">Add a secondary liquor:</label>
         <%= options(@secondaries, "secondary", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="sweetener">Select a sweetener:</label>
+        <label for="sweetener">Add a sweetener:</label>
         <%= options(@sweeteners, "sweetener", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="acid">Select an acid:</label>
+        <label for="acid">Add an acid:</label>
         <%= options(@acids, "acid", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="mixer">Select a mixer:</label>
+        <label for="mixer">Add a mixer:</label>
         <%= options(@mixers, "mixer", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="aromatic">Select an aromatic:</label>
+        <label for="aromatic">Add an aromatic:</label>
         <%= options(@aromatics, "aromatic", "select-auto-submit") %>
       </div>
       <div class="form-group">
-        <label for="garnish">Select a garnish:</label>
+        <label for="garnish">Add a garnish:</label>
         <%= options(@garnishes, "garnish", "select-auto-submit") %>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">CONCOCT</button>
       </div>
     </form>
   </div>
@@ -43,6 +40,27 @@
       <% @ingredients.each do |ingredient| %>
         <%= ingredient.name %>
       <% end %>
+
+      <div class="form-group">
+        <button class="btn btn-sm btn-default" type="button"
+          data-toggle="collapse" data-target="#name-concoction">
+          SAVE CONCOCTION
+        </button>
+      </div>
+
+      <div class="collapse" id="name-concoction">
+        <form class="well form-group"
+          action="/cocktails/<%= @cocktail.id %>/name" method="post">
+          <label for="name">Name Your Concoction</label>
+          <div class="input-group">
+            <input class="form-control" type="text" name="name" placeholder="Name">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit"
+                name="_method" value="patch">Save</button>
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
   <% end %>
 </div>
