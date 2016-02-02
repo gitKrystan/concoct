@@ -7,6 +7,8 @@ class Ingredient < ActiveRecord::Base
               association_foreign_key: :complement_id
   has_many :quantities
   has_many :cocktails, through: :quantities
+  has_many :match_strengths
+  has_many :themes, through: :match_strengths
 
   before_save(:capitalize)
 
