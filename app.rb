@@ -20,6 +20,7 @@ end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
+  @ingredients = Ingredient.all().order(:name)
   erb :admin
 end
 
