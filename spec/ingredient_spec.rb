@@ -11,6 +11,13 @@ describe(Ingredient) do
     expect(test_ingredient.name).to(eq("Vodka"))
   end
 
+  it('validates uniqueness of ingredient') do
+    test_ingredient = create_ingredient
+    expect(Ingredient.all.length).to eq(1)
+    test_ingredient = create_ingredient
+    expect(Ingredient.all.length).to eq(1)
+  end
+
   it('creates join table record ingredient_category') do
     test_category = create_category
     test_ingredient = create_ingredient
@@ -21,7 +28,7 @@ describe(Ingredient) do
   describe('#ingredients') do
     it('returns a list of ingredients that go with the specified ingredient') do
       ingredient1 = create_ingredient
-      ingredient2 = create_ingredient
+      ingredient2 = create_ingredient_2
       ingredient1.ingredients << ingredient2
       ingredient2.ingredients << ingredient1
       expect(ingredient1.ingredients).to eq([ingredient2])
