@@ -11,6 +11,7 @@ class Ingredient < ActiveRecord::Base
   before_save(:capitalize)
 
   validates :name, presence: true
+  validates :name, uniqueness: true
 
   def self.find_unless_none(id)
     Ingredient.find(id.to_i) unless id == "None"

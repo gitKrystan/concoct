@@ -3,6 +3,8 @@ require "pry"
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
+enable :sessions #for flash to work
+
 # USER INTERFACE ROUTES
 get '/' do
   erb :index
@@ -126,8 +128,14 @@ get '/ingredients/new' do
 end
 
 post '/ingredients' do
-  ingredient = Ingredient.create(name: params[:ingredient_name])
-  redirect "/ingredients/#{ingredient.id}/edit"
+  if Ingredient.create(name: params[:ingredient_name]).errors.any?
+    flash[:warning] = "Ingredient \"#{params[:ingredient_name]}\" already exists"
+    redirect "/admin"
+  else
+    ingredient = Ingredient.all.last
+    flash[:success] = "Successfully created ingredient."
+    redirect "/ingredients/#{ingredient.id}/edit"
+  end
 end
 
 # EDIT ingredient
