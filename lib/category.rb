@@ -4,6 +4,10 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def self.ingredients_by(category)
+    Category.find_by(name: category).ingredients.order(:name)
+  end
+
   private
 
   def capitalize
