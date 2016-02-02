@@ -8,7 +8,7 @@ class Category < ActiveRecord::Base
     Category.find_by(name: category).ingredients.order(:name)
   end
 
-  private
+private
 
   def capitalize
     self.name = name.split(" ").each { |w| w.capitalize! }.join(" ")

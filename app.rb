@@ -21,21 +21,14 @@ get '/cocktails/new' do
 end
 
 post '/cocktails' do
-  primary_id = params[:primary]
-  secondary_id = params[:secondary]
-  sweetener_id = params[:sweetener]
-  acid_id = params[:acid]
-  mixer_id = params[:mixer]
-  garnish_id = params[:garnish]
-  aromatic_id = params[:aromatic]
-
-  @primary = Ingredient.find(primary_id.to_i).name unless primary_id == "None"
-  @secondary = Ingredient.find(secondary_id.to_i).name unless secondary_id == "None"
-  @sweetener = Ingredient.find(sweetener_id.to_i).name unless sweetener_id == "None"
-  @acid = Ingredient.find(acid_id.to_i).name unless acid_id == "None"
-  @mixer = Ingredient.find(mixer_id.to_i).name unless mixer_id == "None"
-  @garnish = Ingredient.find(garnish_id.to_i).name unless garnish_id == "None"
-  @aromatic = Ingredient.find(aromatic_id.to_i).name unless aromatic_id == "None"
+  @name = params[:name]
+  @primary = Ingredient.find_unless_none(params[:primary])
+  @secondary = Ingredient.find_unless_none(params[:secondary])
+  @sweetener = Ingredient.find_unless_none(params[:sweetener])
+  @acid = Ingredient.find_unless_none(params[:acid])
+  @mixer = Ingredient.find_unless_none(params[:mixer])
+  @garnish = Ingredient.find_unless_none(params[:garnish])
+  @aromatic = Ingredient.find_unless_none(params[:aromatic])
   erb :cocktail
 end
 
@@ -112,6 +105,6 @@ helpers do
   end
 
   def ingredient_entry(ingredient, amount)
-    "<h5>#{amount} #{ingredient}</h5>"
+    "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
   end
 end

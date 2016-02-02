@@ -10,7 +10,11 @@ class Ingredient < ActiveRecord::Base
 
   validates :name, presence: true
 
-  private
+  def self.find_unless_none(id)
+    Ingredient.find(id.to_i).name() unless id == "None"
+  end
+
+private
 
   def capitalize
     self.name = name.split(" ").each { |w| w.capitalize! }.join(" ")
