@@ -34,6 +34,10 @@ def create_ingredient
   Ingredient.create(name: "Liquor")
 end
 
+def create_ingredient_2
+  Ingredient.create(name: "Rum")
+end
+
 def create_category
   Category.create(name: "Primary" )
 end

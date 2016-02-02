@@ -35,3 +35,17 @@ feature "Adding an ingredient category" do
     expect(find('.add-category-list')).not_to have_content 'Primary'
   end
 end
+
+feature "Adding a complimentary ingredient" do
+  scenario "allows the administrator to add a complimentary ingredient to an ingredient" do
+    test_ingredient = create_ingredient
+    test_ingredient_2 = create_ingredient_2
+    visit '/admin'
+    click_link "#{test_ingredient.name}"
+    # brings you to edit page
+    expect(page).to have_content "#{test_ingredient.name}"
+    click_button "Rum"
+    expect(find('.ingredient-combination-list')).to have_content 'Rum'
+    expect(find('.add-combination-list')).not_to have_content 'Rum'
+  end
+end
