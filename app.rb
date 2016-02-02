@@ -10,6 +10,7 @@ end
 
 # CREATE cocktail
 get '/cocktails/new' do
+  @ingredients = []
   @primaries = Category.ingredients_by('Primary')
   @secondaries = Category.ingredients_by('Secondary')
   @sweeteners = Category.ingredients_by('Sweetener')
@@ -21,16 +22,43 @@ get '/cocktails/new' do
 end
 
 post '/cocktails' do
-  @name = params[:name]
-  @primary = Ingredient.find_unless_none(params[:primary])
-  @secondary = Ingredient.find_unless_none(params[:secondary])
-  @sweetener = Ingredient.find_unless_none(params[:sweetener])
-  @acid = Ingredient.find_unless_none(params[:acid])
-  @mixer = Ingredient.find_unless_none(params[:mixer])
-  @garnish = Ingredient.find_unless_none(params[:garnish])
-  @aromatic = Ingredient.find_unless_none(params[:aromatic])
+  cocktail = Cocktail.create(name: "Temporary")
+  primary = Ingredient.find_unless_none(params[:primary])
+  secondary = Ingredient.find_unless_none(params[:secondary])
+  sweetener = Ingredient.find_unless_none(params[:sweetener])
+  acid = Ingredient.find_unless_none(params[:acid])
+  mixer = Ingredient.find_unless_none(params[:mixer])
+  garnish = Ingredient.find_unless_none(params[:garnish])
+  aromatic = Ingredient.find_unless_none(params[:aromatic])
+  cocktail.ingredients << primary
+  # TODO: update whatever ingredient was chosen
+  redirect "/cocktails/#{cocktail.id}/edit"
+end
+
+# READ cocktail
+get '/cocktails/:id' do
   erb :cocktail
 end
+
+# UPDATE cocktail
+get '/cocktails/:id/edit' do
+  cocktail = Cocktail.find(params[:id].to_i)
+  @ingredients = cocktail.ingredients
+  @primaries = Category.ingredients_by('Primary')
+  @secondaries = Category.ingredients_by('Secondary')
+  @sweeteners = Category.ingredients_by('Sweetener')
+  @acids = Category.ingredients_by('Acid')
+  @mixers = Category.ingredients_by('Mixer')
+  @garnishes = Category.ingredients_by('Garnish')
+  @aromatics = Category.ingredients_by('Aromatic')
+  erb :cocktail_form
+end
+
+patch '/cocktails/:id' do
+  # TODO: update cocktail info here
+end
+
+# TODO: DELETE cocktail
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do

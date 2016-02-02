@@ -18,7 +18,7 @@ feature "create a new cocktail" do
     click_link 'Create a new cocktail'
     select 'Tequila', :from => 'primary'
     select 'Cointreau', :from => 'secondary'
-    # expect(find_field('secondary')).not_to have_content 'Applejack'
+    expect(find_field('secondary')).not_to have_content 'Applejack'
     select 'Agave Nectar', :from => 'sweetener'
     select 'Lime Juice', :from => 'acid'
     select 'Salt', :from => 'garnish'

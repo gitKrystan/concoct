@@ -1,39 +1,47 @@
 <h1>Create a New Cocktail</h1>
 
-<form action="/cocktails" method="post">
-  <div class="form-group">
-    <label for="primary">Select a primary liquor:</label>
-    <%= options(@primaries, "primary", "select-auto-submit") %>
+<div class="row">
+  <div class="col-sm-6">
+    <form action="/cocktails" method="post">
+      <div class="form-group">
+        <label for="primary">Select a primary liquor:</label>
+        <%= options(@primaries, "primary", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="secondary">Select a secondary liquor:</label>
+        <%= options(@secondaries, "secondary", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="sweetener">Select a sweetener:</label>
+        <%= options(@sweeteners, "sweetener", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="acid">Select an acid:</label>
+        <%= options(@acids, "acid", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="mixer">Select a mixer:</label>
+        <%= options(@mixers, "mixer", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="aromatic">Select an aromatic:</label>
+        <%= options(@aromatics, "aromatic", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <label for="garnish">Select a garnish:</label>
+        <%= options(@garnishes, "garnish", "select-auto-submit") %>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">CONCOCT</button>
+      </div>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="secondary">Select a secondary liquor:</label>
-    <%= options(@secondaries, "secondary", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="sweetener">Select a sweetener:</label>
-    <%= options(@sweeteners, "sweetener", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="acid">Select an acid:</label>
-    <%= options(@acids, "acid", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="mixer">Select a mixer:</label>
-    <%= options(@mixers, "mixer", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="aromatic">Select an aromatic:</label>
-    <%= options(@aromatics, "aromatic", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="garnish">Select a garnish:</label>
-    <%= options(@garnishes, "garnish", "select-auto-submit") %>
-  </div>
-  <div class="form-group">
-    <label for="name">Name your Cocktail:</label>
-    <input class="form-control" type="text" name="name" placeholder="Name">
-  </div>
-  <div class="form-group">
-    <button class="btn btn-primary" type="submit">CONCOCT</button>
-  </div>
-</form>
+
+  <% if @ingredients.any? %>
+    <div class="col-sm-6">
+      <% @ingredients.each do |ingredient| %>
+        <%= ingredient.name %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
