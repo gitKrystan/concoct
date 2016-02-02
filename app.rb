@@ -22,19 +22,46 @@ get '/admin' do
   erb :admin
 end
 
+get '/ingredients' do
+  @ingredients = Ingredient.all
+  erb :ingredients
+end
+
 # CREATE ingredient
 get '/ingredients/new' do
   erb :ingredient_form
 end
 
 post '/ingredients' do
-  # TODO: post new ingredient. Redirect to that ingredient's page.
-  redirect "/ingredients/1"
+  ingredient = Ingredient.create(name: params[:ingredient_name])
+  redirect "/ingredients/#{ingredient.id}/edit"
+end
+
+# EDIT ingredient
+get '/ingredients/:id/edit' do
+  @ingredient = Ingredient.find(params[:id].to_i)
+  @ingredient_categories = @ingredient.categories.order(:name)
+  @add_categories = Category.order(:name) - @ingredient_categories
+  erb :ingredients_edit
+end
+
+post '/ingredients/:id/categories' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  category = Category.find(params[:category_id].to_i)
+  ingredient.categories << category
+  redirect "/ingredients/#{ingredient.id}/edit"
+end
+
+delete '/ingredients/:id/categories' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  category = Category.find(params[:category_id].to_i)
+  ingredient.categories.delete(category)
+  redirect "/ingredients/#{ingredient.id}/edit"
 end
 
 # READ ingredient
-get '/ingredients/1' do
-  # TODO: This page should render a specific ingredient based on id
+get '/ingredients/:id' do
+  @ingredient =  Ingredient.find(params[:id].to_i)
   erb :ingredient
 end
 

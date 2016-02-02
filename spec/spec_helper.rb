@@ -15,7 +15,9 @@ require('./app')
 RSpec.configure do |config|
   config.after(:each) do
     Category.all().each() do |category|
-      category.destroy()
+      if category.id > 7
+        category.destroy()
+      end
     end
     Ingredient.all().each() do |ingredient|
       ingredient.destroy()
