@@ -1,1 +1,14 @@
 <h1>Add a New Ingredient</h1>
+
+<form action="/ingredients" method="post">
+  <div class="row">
+    <!-- Ingredient Name -->
+    <div class="form-group col-sm-6">
+      <label for="ingredient_name">Add Ingredient</label>
+      <input type="text" class="form-control" name="ingredient_name" placeholder="Enter ingredient name">
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </div>
+</form>

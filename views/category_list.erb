@@ -1,0 +1,12 @@
+<div class="col-sm-6 store-category-list">
+  <% if @ingredient_categories.any? %>
+    <h5>Categories:</h5>
+    <ul class="nav nav-pills nav-stacked">
+      <% @ingredient_categories.each do |category| %>
+        <li><a href="#"><%= category.name %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <h5>No categories currently added.</h5>
+  <% end %>
+</div>

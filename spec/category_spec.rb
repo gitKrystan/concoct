@@ -7,8 +7,8 @@ describe(Category) do
   end
 
   it('capitalizes the category name') do
-    test_category = Category.create(name: "primary alchohol")
-    expect(test_category.name).to(eq("Primary Alchohol"))
+    test_category = Category.create(name: "primary")
+    expect(test_category.name).to(eq("Primary"))
   end
 
   it('creates join table record category_ingredient') do
