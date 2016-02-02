@@ -114,8 +114,8 @@ delete '/ingredients/:id' do
 end
 
 helpers do
-  def options(list, param_name)
-    html = "<select class='form-control' name='#{param_name}'>\n \
+  def options(list, param_name, class_additions = nil)
+    html = "<select class='form-control #{class_additions}' name='#{param_name}'>\n \
       <option>None</option>"
     list.each do |item|
       html << "<option value='#{item.id}'>#{item.name}</option>"

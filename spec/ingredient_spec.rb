@@ -18,7 +18,7 @@ describe(Ingredient) do
     expect(test_ingredient.categories).to eq([test_category])
   end
 
-  describe('#combinations') do
+  describe('#ingredients') do
     it('returns a list of ingredients that go with the specified ingredient') do
       ingredient1 = create_ingredient
       ingredient2 = create_ingredient
@@ -26,6 +26,16 @@ describe(Ingredient) do
       ingredient2.ingredients << ingredient1
       expect(ingredient1.ingredients).to eq([ingredient2])
       expect(ingredient2.ingredients).to eq([ingredient1])
+    end
+  end
+
+  describe('#cocktails') do
+    it('returns a list of cocktails that use the ingredient') do
+      test_cocktail = create_test_cocktail()
+      test_ingredient = test_cocktail.ingredients.create({
+        name: "test ingredient"
+        })
+      expect(test_ingredient.cocktails).to(eq([test_cocktail]))
     end
   end
 end

@@ -41,3 +41,7 @@ end
 def create_category
   Category.create(name: "Primary" )
 end
+
+def create_test_cocktail
+  Cocktail.create({name: "test cocktail"})
+end

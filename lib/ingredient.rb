@@ -5,6 +5,8 @@ class Ingredient < ActiveRecord::Base
               join_table: :combinations,
               foreign_key: :ingredient_id,
               association_foreign_key: :complement_id
+  has_many :quantities
+  has_many :cocktails, through: :quantities
 
   before_save(:capitalize)
 
