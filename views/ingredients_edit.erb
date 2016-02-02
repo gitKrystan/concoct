@@ -1,7 +1,8 @@
 <div class="row">
   <!-- Ingredient Name -->
   <h3><%= @ingredient.name %></h3>
-  <form action="/ingredients" method="post">
+  <form action="/ingredients/<%= @ingredient.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
     <div class="row">
       <!-- Ingredient Name -->
       <div class="form-group col-sm-6">
@@ -57,3 +58,13 @@
     <% end %>
   </div>
 </div>
+
+<hr>
+<h4>Delete Ingredient</h4>
+    <!-- Submit Button -->
+<form action="/ingredients/<%= @ingredient.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <div class="form-group">
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </div>
+</form>
