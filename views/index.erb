@@ -1,3 +1,21 @@
 <h1>Welcome to CONCOCT</h1>
 
 <a href="/cocktails/new">Create a new cocktail</a>
+
+<% if @ingredients.any? %>
+  <div class="row">
+    <% @ingredients.each do |ingredient| %>
+      <a href="/ingredients/<%= ingredient.id %>">
+        <div class="col-sm-4">
+          <div class="well ingredient-box">
+            <h1><%= ingredient.name %></h1>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+<% else %>
+  <div class="jumbotron">
+    <h1>No ingredients have been added!</h1>
+  </div>
+<% end %>

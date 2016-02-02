@@ -7,6 +7,7 @@ enable :sessions #for flash to work
 
 # USER INTERFACE ROUTES
 get '/' do
+  @ingredients = Category.ingredients_by('Primary')
   erb :index
 end
 
@@ -80,6 +81,13 @@ patch '/cocktails/:id/name' do
   redirect "/cocktails/#{id}"
 end
 
+# READ ingredient
+get '/ingredients/:id' do
+  @ingredient =  Ingredient.find(params[:id].to_i)
+  @cocktails = @ingredient.cocktails.order(:name)
+  erb :ingredient
+end
+
 # TODO: DELETE cocktail
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
@@ -149,12 +157,6 @@ delete '/ingredients/:id/ingredients' do
   ingredient.ingredients.delete(combo_ingredient)
   combo_ingredient.ingredients.delete(ingredient)
   redirect "/ingredients/#{ingredient.id}/edit"
-end
-
-# READ ingredient
-get '/ingredients/:id' do
-  @ingredient =  Ingredient.find(params[:id].to_i)
-  erb :ingredient
 end
 
 # UPDATE ingredient
