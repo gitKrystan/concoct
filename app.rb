@@ -55,9 +55,13 @@ end
 
 # EDIT ingredient
 get '/ingredients/:id/edit' do
+  #ingredents/categories
   @ingredient = Ingredient.find(params[:id].to_i)
   @ingredient_categories = @ingredient.categories.order(:name)
   @add_categories = Category.order(:name) - @ingredient_categories
+  #ingredents/combinations
+  @ingredient_combinations = @ingredient.ingredients.order(:name)
+  @add_combinations = Ingredient.order(:name) - @ingredient_combinations - [@ingredient]
   erb :ingredients_edit
 end
 
@@ -72,6 +76,20 @@ delete '/ingredients/:id/categories' do
   ingredient = Ingredient.find(params[:id].to_i)
   category = Category.find(params[:category_id].to_i)
   ingredient.categories.delete(category)
+  redirect "/ingredients/#{ingredient.id}/edit"
+end
+
+post '/ingredients/:id/ingredients' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  combo_ingredient = Ingredient.find(params[:combo_id].to_i)
+  ingredient.ingredients << combo_ingredient
+  redirect "/ingredients/#{ingredient.id}/edit"
+end
+
+delete '/ingredients/:id/ingredients' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  combo_ingredient = Ingredient.find(params[:combo_id].to_i)
+  ingredient.ingredients.delete(combo_ingredient)
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
