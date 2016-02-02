@@ -2,7 +2,8 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <form action="/cocktails" method="post">
+    <form action="<%= @route %>" method="post">
+      <input hidden name="_method" value="<%= @route_type %>">
       <div class="form-group">
         <label for="primary">Select a primary liquor:</label>
         <%= options(@primaries, "primary", "select-auto-submit") %>

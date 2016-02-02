@@ -10,6 +10,8 @@ end
 
 # CREATE cocktail
 get '/cocktails/new' do
+  @route_type = 'post'
+  @route = '/cocktails'
   @ingredients = []
   @primaries = Category.ingredients_by('Primary')
   @secondaries = Category.ingredients_by('Secondary')
@@ -30,8 +32,15 @@ post '/cocktails' do
   mixer = Ingredient.find_unless_none(params[:mixer])
   garnish = Ingredient.find_unless_none(params[:garnish])
   aromatic = Ingredient.find_unless_none(params[:aromatic])
-  cocktail.ingredients << primary
-  # TODO: update whatever ingredient was chosen
+
+  cocktail.ingredients << primary unless primary.nil?
+  cocktail.ingredients << secondary unless secondary.nil?
+  cocktail.ingredients << sweetener unless sweetener.nil?
+  cocktail.ingredients << acid unless acid.nil?
+  cocktail.ingredients << mixer unless mixer.nil?
+  cocktail.ingredients << garnish unless garnish.nil?
+  cocktail.ingredients << aromatic unless aromatic.nil?
+
   redirect "/cocktails/#{cocktail.id}/edit"
 end
 
@@ -42,20 +51,48 @@ end
 
 # UPDATE cocktail
 get '/cocktails/:id/edit' do
-  cocktail = Cocktail.find(params[:id].to_i)
+  id = params[:id].to_i
+  cocktail = Cocktail.find(id)
+  @route_type = 'patch'
+  @route = "/cocktails/#{id}"
   @ingredients = cocktail.ingredients
-  @primaries = Category.ingredients_by('Primary')
-  @secondaries = Category.ingredients_by('Secondary')
-  @sweeteners = Category.ingredients_by('Sweetener')
-  @acids = Category.ingredients_by('Acid')
-  @mixers = Category.ingredients_by('Mixer')
-  @garnishes = Category.ingredients_by('Garnish')
-  @aromatics = Category.ingredients_by('Aromatic')
+
+  combo_ingredients = @ingredients.to_a.shift.ingredients
+  @ingredients.each do |ingredient|
+    combo_ingredients = ingredient.ingredients & combo_ingredients
+  end
+
+  @primaries = Category.ingredients_by('Primary') & combo_ingredients
+  @secondaries = Category.ingredients_by('Secondary') & combo_ingredients
+  @sweeteners = Category.ingredients_by('Sweetener') & combo_ingredients
+  @acids = Category.ingredients_by('Acid') & combo_ingredients
+  @mixers = Category.ingredients_by('Mixer') & combo_ingredients
+  @garnishes = Category.ingredients_by('Garnish') & combo_ingredients
+  @aromatics = Category.ingredients_by('Aromatic') & combo_ingredients
   erb :cocktail_form
 end
 
 patch '/cocktails/:id' do
-  # TODO: update cocktail info here
+  id = params[:id].to_i
+  cocktail = Cocktail.find(id)
+
+  primary = Ingredient.find_unless_none(params[:primary])
+  secondary = Ingredient.find_unless_none(params[:secondary])
+  sweetener = Ingredient.find_unless_none(params[:sweetener])
+  acid = Ingredient.find_unless_none(params[:acid])
+  mixer = Ingredient.find_unless_none(params[:mixer])
+  garnish = Ingredient.find_unless_none(params[:garnish])
+  aromatic = Ingredient.find_unless_none(params[:aromatic])
+
+  cocktail.ingredients << primary unless primary.nil?
+  cocktail.ingredients << secondary unless secondary.nil?
+  cocktail.ingredients << sweetener unless sweetener.nil?
+  cocktail.ingredients << acid unless acid.nil?
+  cocktail.ingredients << mixer unless mixer.nil?
+  cocktail.ingredients << garnish unless garnish.nil?
+  cocktail.ingredients << aromatic unless aromatic.nil?
+
+  redirect "/cocktails/#{id}/edit"
 end
 
 # TODO: DELETE cocktail
@@ -111,6 +148,7 @@ post '/ingredients/:id/ingredients' do
   ingredient = Ingredient.find(params[:id].to_i)
   combo_ingredient = Ingredient.find(params[:combo_id].to_i)
   ingredient.ingredients << combo_ingredient
+  combo_ingredient.ingredients << ingredient
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
@@ -118,6 +156,7 @@ delete '/ingredients/:id/ingredients' do
   ingredient = Ingredient.find(params[:id].to_i)
   combo_ingredient = Ingredient.find(params[:combo_id].to_i)
   ingredient.ingredients.delete(combo_ingredient)
+  combo_ingredient.ingredients.delete(ingredient)
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
