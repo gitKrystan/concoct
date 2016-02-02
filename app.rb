@@ -10,6 +10,7 @@ end
 
 # CREATE cocktail
 get '/cocktails/new' do
+  @primaries = Ingredient.all
   erb :cocktail_form
 end
 
@@ -76,4 +77,15 @@ end
 delete '/ingredients/1' do
   # TODO: delete ingredient. Redirect to that ingredient's page.
   redirect '/admin'
+end
+
+helpers do
+  def options(list, param_name)
+    html = "<select class='form-control' name='#{param_name}'>"
+    list.each do |item|
+      html << "<option value='#{item.id}'>#{item.name}</option>"
+    end
+    html << "</select>"
+    html
+  end
 end
