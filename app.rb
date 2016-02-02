@@ -89,14 +89,16 @@ get '/ingredients/:id' do
 end
 
 # UPDATE ingredient
-patch '/ingredients/1' do
-  # TODO: patch ingredient. Redirect to that ingredient's page.
-  redirect "/ingredients/1"
+patch '/ingredients/:id' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  ingredient.update(name: params[:ingredient_name])
+  redirect "/ingredients/#{ingredient.id}/edit"
 end
 
 # DELETE ingredient
-delete '/ingredients/1' do
-  # TODO: delete ingredient. Redirect to that ingredient's page.
+delete '/ingredients/:id' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  ingredient.destroy
   redirect '/admin'
 end
 
