@@ -12,30 +12,31 @@
     </div>
 
     <!-- Submit Button -->
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Update</button>
-  </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
   </form>
+</div>
 
 
-<div class="row">
-  <!-- Category List -->
-  <div class="col-sm-6 ingredient-category-list">
-    <% if @ingredient_categories.any? %>
-      <h5>Categories:</h5>
-      <ul class="nav nav-pills nav-stacked">
-        <% @ingredient_categories.each do |category| %>
-          <form action="/ingredients/<%= @ingredient.id %>/categories" method="post">
-            <input hidden name="category_id" value="<%= category.id %>">
-            <label for="_method"><%= category.name %></label>
-            <button type="submit" class="btn btn-link" name="_method" value="delete">(remove)</button>
-          </form>
-        <% end %>
-      </ul>
-    <% else %>
-      <h5>No categories currently added.</h5>
-    <% end %>
-  </div>
+  <div class="row">
+    <!-- Category List -->
+    <div class="col-sm-6 ingredient-category-list">
+      <% if @ingredient_categories.any? %>
+        <h5>Categories:</h5>
+        <ul class="nav nav-pills nav-stacked">
+          <% @ingredient_categories.each do |category| %>
+            <form action="/ingredients/<%= @ingredient.id %>/categories" method="post">
+              <input hidden name="category_id" value="<%= category.id %>">
+              <label for="_method"><%= category.name %></label>
+              <button type="submit" class="btn btn-link" name="_method" value="delete">(remove)</button>
+            </form>
+          <% end %>
+        </ul>
+      <% else %>
+        <h5>No categories currently added.</h5>
+      <% end %>
+    </div>
 
 
   <!-- Add Category List -->
@@ -48,6 +49,48 @@
             <form action="/ingredients/<%= @ingredient.id %>/categories" method="post">
               <input hidden name="category_id" value="<%= category.id %>">
               <button type="submit" class="btn btn-sm btn-default"><%= category.name %></button>
+            </form>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <h5>No categories to add.</h5>
+      <h5>Go to <a href="/admin">Admin Page</a> to add more categories.</h5>
+    <% end %>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <!-- Combinations List -->
+  <div class="col-sm-6 ingredient-combination-list">
+    <% if @ingredient_combinations.any? %>
+      <h5>Combinations:</h5>
+      <ul class="nav nav-pills nav-stacked">
+        <% @ingredient_combinations.each do |combo| %>
+          <form action="/ingredients/<%= @ingredient.id %>/ingredients" method="post">
+            <input hidden name="combo_id" value="<%= combo.id %>">
+            <label for="_method"><%= combo.name %></label>
+            <button type="submit" class="btn btn-link" name="_method" value="delete">(remove)</button>
+          </form>
+        <% end %>
+      </ul>
+    <% else %>
+      <h5>No categories currently added.</h5>
+    <% end %>
+  </div>
+
+  <!-- Add Combinations List -->
+  <div class="col-sm-6 add-combination-list">
+    <% if @add_combinations.any? %>
+    <h5>Click to add a complimentary ingredient:</h5>
+      <ul class="nav nav-pills">
+        <% @add_combinations.each do |combo| %>
+          <li>
+            <form action="/ingredients/<%= @ingredient.id %>/ingredients" method="post">
+              <input hidden name="combo_id" value="<%= combo.id %>">
+              <button type="submit" class="btn btn-sm btn-default"><%= combo.name %></button>
             </form>
           </li>
         <% end %>

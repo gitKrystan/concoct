@@ -23,7 +23,7 @@ RSpec.configure do |config|
     Category.create(name: "Acid")
     Category.create(name: "Mixer")
     Category.create(name: "Garnish")
-    Category.create(name: "Aromatic")       
+    Category.create(name: "Aromatic")
     Ingredient.all().each() do |ingredient|
       ingredient.destroy()
     end
@@ -32,6 +32,10 @@ end
 
 def create_ingredient
   Ingredient.create(name: "Liquor")
+end
+
+def create_ingredient_2
+  Ingredient.create(name: "Rum")
 end
 
 def create_category
