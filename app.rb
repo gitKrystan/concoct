@@ -73,19 +73,25 @@ patch '/cocktails/:id' do
   redirect "/cocktails/#{id}/edit"
 end
 
+delete '/cocktails/:cocktail_id/ingredients/:ingredient_id' do
+  id = params[:cocktail_id].to_i
+  cocktail = Cocktail.find(id)
+  ingredient_id = params[:ingredient_id].to_i
+  ingredient = Ingredient.find(ingredient_id)
+  cocktail.ingredients.delete(ingredient)
+  if cocktail.ingredients.length > 0
+    redirect "/cocktails/#{id}/edit"
+  else
+    redirect "/cocktails/new"
+  end
+end
+
 patch '/cocktails/:id/name' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
 
   redirect "/cocktails/#{id}"
-end
-
-# READ ingredient
-get '/ingredients/:id' do
-  @ingredient =  Ingredient.find(params[:id].to_i)
-  @cocktails = @ingredient.cocktails.order(:name)
-  erb :ingredient
 end
 
 # TODO: DELETE cocktail
@@ -115,6 +121,13 @@ post '/ingredients' do
     flash[:success] = "Successfully created ingredient."
     redirect "/ingredients/#{ingredient.id}/edit"
   end
+end
+
+# READ ingredient
+get '/ingredients/:id' do
+  @ingredient = Ingredient.find(params[:id].to_i)
+  @cocktails = @ingredient.cocktails.order(:name)
+  erb :ingredient
 end
 
 # EDIT ingredient

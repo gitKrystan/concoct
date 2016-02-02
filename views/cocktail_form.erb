@@ -37,9 +37,16 @@
 
   <% if @ingredients.any? %>
     <div class="col-sm-6">
-      <% @ingredients.each do |ingredient| %>
-        <%= ingredient.name %>
-      <% end %>
+      <ul>
+        <% @ingredients.each do |ingredient| %>
+          <li>
+            <form action="/cocktails/<%= @cocktail.id %>/ingredients/<%= ingredient.id %>" method="post">
+              <label for="remove"><%= ingredient.name %></label>
+              <button class="btn btn-link" type="submit" name="_method" value="delete">remove</button>
+            </form>
+          </li>
+        <% end %>
+      </ul>
 
       <div class="form-group">
         <button class="btn btn-sm btn-default" type="button"
