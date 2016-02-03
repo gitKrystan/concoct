@@ -109,8 +109,6 @@ patch '/cocktails/:id/name' do
   redirect "/cocktails/#{id}"
 end
 
-# TODO: DELETE cocktail
-
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
   @ingredients = Ingredient.all().order(:name)
@@ -181,6 +179,14 @@ delete '/ingredients/:id/ingredients' do
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
+post '/ingredients/:id/themes' do
+  ingredient = Ingredient.find(params[:id].to_i)
+  Theme.all.each do |theme|
+    MatchStrength.create(ingredient_id: params[:id].to_i, theme_id: theme.id, strength: params.fetch(theme.name))
+  end
+  redirect "/ingredients/#{ingredient.id}/edit"
+end
+
 # READ ingredient
 get '/ingredients/:id' do
   @ingredient =  Ingredient.find(params[:id].to_i)
@@ -199,6 +205,13 @@ delete '/ingredients/:id' do
   ingredient = Ingredient.find(params[:id].to_i)
   ingredient.destroy
   redirect '/admin'
+end
+
+# DELETE cocktail
+delete '/cocktails/:id' do
+  cocktail = Cocktail.find(params[:id].to_i)
+  cocktail.destroy
+  redirect "/admin"
 end
 
 helpers do
