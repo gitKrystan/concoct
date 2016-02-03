@@ -13,7 +13,6 @@ end
 
 # CREATE cocktail
 get '/cocktails/new' do
-  @route_type = 'post'
   @route = '/cocktails'
   @ingredients = []
   @cocktail = Cocktail.new
@@ -46,8 +45,7 @@ end
 get '/cocktails/:id/edit' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @route_type = 'patch'
-  @route = "/cocktails/#{id}"
+  @route = "/cocktails/#{id}/ingredients"
 
   @ingredients = @cocktail.ingredients
   combo_ingredients = @ingredients.to_a.shift.ingredients
@@ -65,7 +63,7 @@ get '/cocktails/:id/edit' do
   erb :cocktail_form
 end
 
-patch '/cocktails/:id' do
+post '/cocktails/:id/ingredients' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
   add_ingredients(cocktail, params)
@@ -86,10 +84,18 @@ delete '/cocktails/:cocktail_id/ingredients/:ingredient_id' do
   end
 end
 
-patch '/cocktails/:id/name' do
+patch '/cocktails/:id' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
+
+  strength = params[:strength].to_i
+  sweetness = params[:sweetness].to_i
+
+  ingredients = cocktail.ingredients
+  ingredients.each do |ingredient|
+    
+  end
 
   redirect "/cocktails/#{id}"
 end
