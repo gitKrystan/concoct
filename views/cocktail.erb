@@ -1,5 +1,5 @@
 <h1><%= @cocktail.name %></h1>
 
 <% @recipe_entries.each do |entry| %>
-  <%= entry_generator(entry.ingredient.name, entry.amount) %>
+  <%= entry_generator(entry) %>
 <% end %>

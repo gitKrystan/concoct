@@ -120,7 +120,9 @@ patch '/cocktails/:id' do
         preference_modifier = 0
       end
       adjusted_amount = [(default_amount + preference_modifier) / category_count, 0.25].max
-      entry.update(amount: adjusted_amount)
+      adjusted_amount = adjusted_amount.to_rational_string
+      entry_amount = "#{adjusted_amount} #{category.unit}"
+      entry.update(amount: entry_amount)
     end
   end
 
@@ -263,8 +265,8 @@ helpers do
     html
   end
 
-  def entry_generator(ingredient, amount)
-    "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
+  def entry_generator(entry)
+    "<h5>#{entry.amount} #{entry.ingredient.name}</h5>" unless entry.ingredient.nil?
   end
 
   def add_ingredients(cocktail, params)
