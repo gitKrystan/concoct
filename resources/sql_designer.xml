@@ -51,7 +51,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="655" y="259" name="categories">
+<table x="703" y="267" name="categories">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -62,7 +62,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="605" y="442" name="themes">
+<table x="636" y="639" name="themes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -73,7 +73,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="375" y="245" name="categories_ingredients">
+<table x="377" y="236" name="categories_ingredients">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -89,7 +89,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="367" y="406" name="match_strength">
+<table x="370" y="607" name="match_strength">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -108,37 +108,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="551" y="582" name="cocktails">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
-<datatype>VARCHAR</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="365" y="565" name="quantities">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="id_cocktails" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="cocktails" row="id" />
-</row>
-<row name="id_ingredients" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="ingredients" row="id" />
-</row>
-<row name="amount" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="1000" y="580" name="ratings">
+<table x="1023" y="72" name="ratings">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -149,7 +119,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="759" y="571" name="cocktails_ratings">
+<table x="792" y="72" name="cocktails_ratings">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -157,7 +127,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="ratings" row="id" />
 </row>
-<row name="id_recipes" null="1" autoincrement="0">
+<row name="id_cocktails" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="cocktails" row="id" />
 </row>
@@ -165,7 +135,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="390" y="33" name="combinations">
+<table x="386" y="457" name="combinations">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -177,6 +147,40 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="ingredients" row="id" />
 </row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="400" y="31" name="recipe_entries">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="id_cocktails" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="cocktails" row="id" />
+</row>
+<row name="id_ingredients" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="ingredients" row="id" />
+</row>
+<row name="id_categories" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="categories" row="id" />
+</row>
+<row name="amount" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="606" y="56" name="cocktails">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

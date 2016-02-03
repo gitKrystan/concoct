@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202222155) do
+ActiveRecord::Schema.define(version: 20160203163420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,16 +61,18 @@ ActiveRecord::Schema.define(version: 20160202222155) do
   add_index "match_strengths", ["ingredient_id"], name: "index_match_strengths_on_ingredient_id", using: :btree
   add_index "match_strengths", ["theme_id"], name: "index_match_strengths_on_theme_id", using: :btree
 
-  create_table "quantities", force: :cascade do |t|
+  create_table "recipe_entries", force: :cascade do |t|
     t.string   "amount"
     t.integer  "ingredient_id"
     t.integer  "cocktail_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "category_id"
   end
 
-  add_index "quantities", ["cocktail_id"], name: "index_quantities_on_cocktail_id", using: :btree
-  add_index "quantities", ["ingredient_id"], name: "index_quantities_on_ingredient_id", using: :btree
+  add_index "recipe_entries", ["category_id"], name: "index_recipe_entries_on_category_id", using: :btree
+  add_index "recipe_entries", ["cocktail_id"], name: "index_recipe_entries_on_cocktail_id", using: :btree
+  add_index "recipe_entries", ["ingredient_id"], name: "index_recipe_entries_on_ingredient_id", using: :btree
 
   create_table "themes", force: :cascade do |t|
     t.string   "name"
