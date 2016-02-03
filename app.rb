@@ -7,12 +7,12 @@ enable :sessions #for flash to work
 
 # USER INTERFACE ROUTES
 get '/' do
+  @ingredients = Category.ingredients_by('Primary')
   erb :index
 end
 
 # CREATE cocktail
 get '/cocktails/new' do
-  @route_type = 'post'
   @route = '/cocktails'
   @ingredients = []
   @cocktail = Cocktail.new
@@ -28,21 +28,7 @@ end
 
 post '/cocktails' do
   cocktail = Cocktail.create(name: "Temporary")
-  primary = Ingredient.find_unless_none(params[:primary])
-  secondary = Ingredient.find_unless_none(params[:secondary])
-  sweetener = Ingredient.find_unless_none(params[:sweetener])
-  acid = Ingredient.find_unless_none(params[:acid])
-  mixer = Ingredient.find_unless_none(params[:mixer])
-  garnish = Ingredient.find_unless_none(params[:garnish])
-  aromatic = Ingredient.find_unless_none(params[:aromatic])
-
-  cocktail.ingredients << primary unless primary.nil?
-  cocktail.ingredients << secondary unless secondary.nil?
-  cocktail.ingredients << sweetener unless sweetener.nil?
-  cocktail.ingredients << acid unless acid.nil?
-  cocktail.ingredients << mixer unless mixer.nil?
-  cocktail.ingredients << garnish unless garnish.nil?
-  cocktail.ingredients << aromatic unless aromatic.nil?
+  add_ingredients(cocktail, params)
 
   redirect "/cocktails/#{cocktail.id}/edit"
 end
@@ -59,8 +45,7 @@ end
 get '/cocktails/:id/edit' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @route_type = 'patch'
-  @route = "/cocktails/#{id}"
+  @route = "/cocktails/#{id}/ingredients"
 
   @ingredients = @cocktail.ingredients
   combo_ingredients = @ingredients.to_a.shift.ingredients
@@ -78,33 +63,39 @@ get '/cocktails/:id/edit' do
   erb :cocktail_form
 end
 
-patch '/cocktails/:id' do
+post '/cocktails/:id/ingredients' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
-
-  primary = Ingredient.find_unless_none(params[:primary])
-  secondary = Ingredient.find_unless_none(params[:secondary])
-  sweetener = Ingredient.find_unless_none(params[:sweetener])
-  acid = Ingredient.find_unless_none(params[:acid])
-  mixer = Ingredient.find_unless_none(params[:mixer])
-  garnish = Ingredient.find_unless_none(params[:garnish])
-  aromatic = Ingredient.find_unless_none(params[:aromatic])
-
-  cocktail.ingredients << primary unless primary.nil?
-  cocktail.ingredients << secondary unless secondary.nil?
-  cocktail.ingredients << sweetener unless sweetener.nil?
-  cocktail.ingredients << acid unless acid.nil?
-  cocktail.ingredients << mixer unless mixer.nil?
-  cocktail.ingredients << garnish unless garnish.nil?
-  cocktail.ingredients << aromatic unless aromatic.nil?
+  add_ingredients(cocktail, params)
 
   redirect "/cocktails/#{id}/edit"
 end
 
-patch '/cocktails/:id/name' do
+delete '/cocktails/:cocktail_id/ingredients/:ingredient_id' do
+  id = params[:cocktail_id].to_i
+  cocktail = Cocktail.find(id)
+  ingredient_id = params[:ingredient_id].to_i
+  ingredient = Ingredient.find(ingredient_id)
+  cocktail.ingredients.delete(ingredient)
+  if cocktail.ingredients.length > 0
+    redirect "/cocktails/#{id}/edit"
+  else
+    redirect "/cocktails/new"
+  end
+end
+
+patch '/cocktails/:id' do
   id = params[:id].to_i
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
+
+  strength = params[:strength].to_i
+  sweetness = params[:sweetness].to_i
+
+  ingredients = cocktail.ingredients
+  ingredients.each do |ingredient|
+    
+  end
 
   redirect "/cocktails/#{id}"
 end
@@ -136,6 +127,13 @@ post '/ingredients' do
     flash[:success] = "Successfully created ingredient."
     redirect "/ingredients/#{ingredient.id}/edit"
   end
+end
+
+# READ ingredient
+get '/ingredients/:id' do
+  @ingredient = Ingredient.find(params[:id].to_i)
+  @cocktails = @ingredient.cocktails.order(:name)
+  erb :ingredient
 end
 
 # EDIT ingredient
@@ -180,12 +178,6 @@ delete '/ingredients/:id/ingredients' do
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
-# READ ingredient
-get '/ingredients/:id' do
-  @ingredient =  Ingredient.find(params[:id].to_i)
-  erb :ingredient
-end
-
 # UPDATE ingredient
 patch '/ingredients/:id' do
   ingredient = Ingredient.find(params[:id].to_i)
@@ -213,5 +205,23 @@ helpers do
 
   def ingredient_entry(ingredient, amount)
     "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
+  end
+
+  def add_ingredients(cocktail, params)
+    primary = Ingredient.find_unless_none(params[:primary])
+    secondary = Ingredient.find_unless_none(params[:secondary])
+    sweetener = Ingredient.find_unless_none(params[:sweetener])
+    acid = Ingredient.find_unless_none(params[:acid])
+    mixer = Ingredient.find_unless_none(params[:mixer])
+    garnish = Ingredient.find_unless_none(params[:garnish])
+    aromatic = Ingredient.find_unless_none(params[:aromatic])
+
+    cocktail.ingredients << primary unless primary.nil?
+    cocktail.ingredients << secondary unless secondary.nil?
+    cocktail.ingredients << sweetener unless sweetener.nil?
+    cocktail.ingredients << acid unless acid.nil?
+    cocktail.ingredients << mixer unless mixer.nil?
+    cocktail.ingredients << garnish unless garnish.nil?
+    cocktail.ingredients << aromatic unless aromatic.nil?
   end
 end
