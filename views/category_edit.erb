@@ -1,0 +1,28 @@
+<div class="row">
+  <!-- Ingredient Name -->
+  <h3><%= @category.name %></h3>
+  <form action="/categories/<%= @category.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <div class="form-inline">
+      <label for="default_amount">Default Amount</label>
+      <input class="form-control" type="float" name="default_amount" value="<%= @category.default_amount %>">
+      <input class="form-control" type="text" name="unit" value="<%= @category.unit %>">
+    </div>
+    <div class="form-inline">
+      <label for="modifier">modifier</label>
+      <select class="form-control" name="modifier">
+        <option><%= @category.modifier %></option>
+        <option>strength positive</option>
+        <option>strength negative</option>
+        <option>sweetness positive</option>
+        <option>sweetness negative</option>
+        <option>none</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+
+<hr>

@@ -92,15 +92,25 @@ patch '/cocktails/:id' do
   strength = params[:strength].to_i
   sweetness = params[:sweetness].to_i
 
-  # recipe_entries = cocktail.recipe_entries
-  # recipe_entries.each do |entry|
-  #   category = entry.category
-  #   default = category.default
-  # end
+  recipe_entries = cocktail.recipe_entries
 
-  ingredients = cocktail.ingredients
-  ingredients.each do |ingredient|
+  category_counts = {}
+  Category.all.each do |category|
+    category_id = category.id
+    category_count = recipe_entries.where(category_id: category_id).count
+    category_counts[category_id] = category_count
+  end
 
+  recipe_entries.each do |entry|
+    category = entry.category
+    category_count = category_counts[category.id]
+    if category_count > 0
+      default_amount = category.default_amount
+      # preference_modifier = changes based on strength or sweetness depending on what the category is
+      # adjusted_amount = default_amount * preference_modifier / category_count
+      adjusted_amount = default_amount / category_count
+      entry.update(amount: adjusted_amount)
+    end
   end
 
   redirect "/cocktails/#{id}"
@@ -108,14 +118,10 @@ end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
-  @ingredients = Ingredient.all().order(:name)
-  @cocktails = Cocktail.all().order(:name)
+  @ingredients = Ingredient.order(:name)
+  @cocktails = Cocktail.order(:name)
+  @categories = Category.order(:name)
   erb :admin
-end
-
-get '/ingredients' do
-  @ingredients = Ingredient.all
-  erb :ingredients
 end
 
 # CREATE ingredient
@@ -215,6 +221,23 @@ end
 delete '/cocktails/:id' do
   cocktail = Cocktail.find(params[:id].to_i)
   cocktail.destroy
+  redirect "/admin"
+end
+
+# EDIT categories
+get '/categories/:id/edit' do
+  @category = Category.find(params[:id])
+  erb :category_edit
+end
+
+patch '/categories/:id' do
+  category = Category.find(params[:id])
+  category.update({
+    default_amount: params[:default_amount],
+    unit: params[:unit],
+    modifier: params[:modifier]
+    })
+  flash[:success] = "Successfully updated category."
   redirect "/admin"
 end
 

@@ -21,13 +21,42 @@ RSpec.configure do |config|
     Category.all().each() do |category|
       category.destroy()
     end
-    Category.create(name: "Primary")
-    Category.create(name: "Secondary")
-    Category.create(name: "Sweetener")
-    Category.create(name: "Acid")
-    Category.create(name: "Mixer")
-    Category.create(name: "Garnish")
-    Category.create(name: "Aromatic")
+    Category.create({
+      name: "Primary",
+      modifier: "strength positive"
+      })
+    Category.create({
+      name: "Secondary",
+      modifier: "strength positive"
+      })
+    Category.create({
+      name: "Sweetener",
+      default_amount: 1,
+      unit: "tsp",
+      modifier: "sweetness positive"
+      })
+    Category.create({
+      name: "Acid",
+      default_amount: 1,
+      modifier: "sweetness negative"
+      })
+    Category.create({
+      name: "Mixer",
+      default_amount: 2,
+      modifier: "strength negative"
+      })
+    Category.create({
+      name: "Garnish",
+      default_amount: 1,
+      unit: "",
+      modifier: "none"
+      })
+    Category.create({
+      name: "Aromatic",
+      default_amount: 3,
+      unit: "drops",
+      modifier: "none"
+      })
     Ingredient.all().each() do |ingredient|
       ingredient.destroy()
     end
