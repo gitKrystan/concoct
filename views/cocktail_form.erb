@@ -1,9 +1,8 @@
-<h1>Create a New Cocktail</h1>
+<h1>Pick Your Ingredients</h1>
 
 <div class="row">
   <div class="col-sm-6">
     <form action="<%= @route %>" method="post">
-      <input hidden name="_method" value="<%= @route_type %>">
       <div class="form-group">
         <label for="primary">Add a primary liquor:</label>
         <%= options(@primaries, "primary", "select-auto-submit") %>
@@ -37,30 +36,67 @@
 
   <% if @ingredients.any? %>
     <div class="col-sm-6">
-      <% @ingredients.each do |ingredient| %>
-        <%= ingredient.name %>
-      <% end %>
+      <ul>
+        <% @ingredients.each do |ingredient| %>
+          <li>
+            <form action="/cocktails/<%= @cocktail.id %>/ingredients/<%= ingredient.id %>" method="post">
+              <label for="remove"><%= ingredient.name %></label>
+              <button class="btn btn-link" type="submit" name="_method" value="delete">remove</button>
+            </form>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
 
+<hr>
+
+<% if @ingredients.any? %>
+  <div class="row">
+    <div class="col-md-12">
       <div class="form-group">
         <button class="btn btn-sm btn-default" type="button"
           data-toggle="collapse" data-target="#name-concoction">
-          SAVE CONCOCTION
+          GENERATE CONCOCTION
         </button>
       </div>
 
       <div class="collapse" id="name-concoction">
         <form class="well form-group"
-          action="/cocktails/<%= @cocktail.id %>/name" method="post">
-          <label for="name">Name Your Concoction</label>
-          <div class="input-group">
-            <input class="form-control" type="text" name="name" placeholder="Name">
-            <span class="input-group-btn">
-              <button class="btn btn-primary" type="submit"
-                name="_method" value="patch">Save</button>
-            </span>
+          action="/cocktails/<%= @cocktail.id %>" method="post">
+
+          <div class="row">
+            <p class="col-md-12">
+              Choose the strength and sweetness of your cocktail:
+            </p>
+            <div class="col-md-6">
+              <label for="strength">Weak</label>
+              <label for="strength" class="pull-right">Strong</label>
+              <input name="strength" type="range" min="-100" max="100" step="25" />
+            </div>
+
+            <div class="col-md-6">
+              <label for="sweetness">Tart</label>
+              <label for="sweetness" class="pull-right">Sweet</label>
+              <input name="sweetness" type="range" min="-100" max="100" step="25" />
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="name">Name your concoction!</label>
+              <div class="input-group">
+                <input class="form-control" type="text" name="name" placeholder="Name">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="submit"
+                    name="_method" value="patch">Generate</button>
+                </span>
+              </div>
+            </div>
           </div>
         </form>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

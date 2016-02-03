@@ -18,16 +18,19 @@ feature "create a new cocktail" do
   scenario "allows the user to create a new cocktail based on their selections", :js => true do
     visit '/'
     click_link 'Create a new cocktail'
+    select 'Applejack', :from => 'secondary'
+    click_button 'remove'
     select 'Tequila', :from => 'primary'
     select 'Cointreau', :from => 'secondary'
     expect(find_field('secondary')).not_to have_content 'Applejack'
     select 'Agave Nectar', :from => 'sweetener'
-    click_button 'SAVE CONCOCTION'
+    click_button 'GENERATE CONCOCTION'
     fill_in 'name', :with => 'Newgarita'
-    click_button 'Save'
+    click_button 'Generate'
     expect(page).to have_content 'Newgarita'
     expect(page).to have_content 'Tequila'
     expect(page).to have_content 'Cointreau'
     expect(page).to have_content 'Agave Nectar'
+    expect(page).not_to have_content 'Applejack'
   end
 end
