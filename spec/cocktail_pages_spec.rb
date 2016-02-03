@@ -4,7 +4,7 @@ feature "create a new cocktail" do
   before do
     tequila = Category.find_by(name: 'Primary').ingredients.create(name: 'Tequila')
     cointreau = Category.find_by(name: 'Secondary').ingredients.create(name: 'Cointreau')
-    Category.find_by(name: 'Secondary').ingredients.create(name: 'Applejack')
+    Category.find_by(name: 'Primary').ingredients.create(name: 'Applejack')
     agave = Category.find_by(name: 'Sweetener').ingredients.create(name: 'Agave Nectar')
     Category.find_by(name: 'Acid').ingredients.create(name: 'Lime Juice')
     Category.find_by(name: 'Mixer').ingredients.create(name: 'Ginger Ale')
@@ -18,12 +18,13 @@ feature "create a new cocktail" do
   scenario "allows the user to create a new cocktail based on their selections", :js => true do
     visit '/'
     click_link 'Create a new cocktail'
-    select 'Applejack', :from => 'secondary'
+    select 'Applejack', :from => Category.find_id_by_name("primary").to_s
     click_button 'remove'
-    select 'Tequila', :from => 'primary'
-    select 'Cointreau', :from => 'secondary'
-    expect(find_field('secondary')).not_to have_content 'Applejack'
-    select 'Agave Nectar', :from => 'sweetener'
+    select 'Tequila', :from => Category.find_id_by_name("primary").to_s
+    select 'Cointreau', :from => Category.find_id_by_name("secondary").to_s
+    expect(find_field(Category.find_id_by_name("secondary").to_s))
+      .not_to have_content 'Applejack'
+    select 'Agave Nectar', :from => Category.find_id_by_name("sweetener").to_s
     click_button 'GENERATE CONCOCTION'
     fill_in 'name', :with => 'Newgarita'
     click_button 'Generate'

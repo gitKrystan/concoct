@@ -16,7 +16,7 @@ class Ingredient < ActiveRecord::Base
   validates :name, uniqueness: true
 
   def self.find_unless_none(id)
-    Ingredient.find(id.to_i) unless id == "None"
+    Ingredient.find(id.to_i) unless id == ""
   end
 
 private

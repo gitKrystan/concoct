@@ -5,31 +5,31 @@
     <form action="<%= @route %>" method="post">
       <div class="form-group">
         <label for="primary">Add a primary liquor:</label>
-        <%= options(@primaries, "primary", "select-auto-submit") %>
+        <%= options(@primary, Category.find_id_by_name("primary"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="secondary">Add a secondary liquor:</label>
-        <%= options(@secondaries, "secondary", "select-auto-submit") %>
+        <%= options(@secondary, Category.find_id_by_name("secondary"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="sweetener">Add a sweetener:</label>
-        <%= options(@sweeteners, "sweetener", "select-auto-submit") %>
+        <%= options(@sweetener, Category.find_id_by_name("sweetener"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="acid">Add an acid:</label>
-        <%= options(@acids, "acid", "select-auto-submit") %>
+        <%= options(@acid, Category.find_id_by_name("acid"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="mixer">Add a mixer:</label>
-        <%= options(@mixers, "mixer", "select-auto-submit") %>
+        <%= options(@mixer, Category.find_id_by_name("mixer"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="aromatic">Add an aromatic:</label>
-        <%= options(@aromatics, "aromatic", "select-auto-submit") %>
+        <%= options(@aromatic, Category.find_id_by_name("aromatic"), "select-auto-submit") %>
       </div>
       <div class="form-group">
         <label for="garnish">Add a garnish:</label>
-        <%= options(@garnishes, "garnish", "select-auto-submit") %>
+        <%= options(@garnish, Category.find_id_by_name("garnish"), "select-auto-submit") %>
       </div>
     </form>
   </div>
