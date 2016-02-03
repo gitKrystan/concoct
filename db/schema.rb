@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202175933) do
+ActiveRecord::Schema.define(version: 20160202222155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,17 @@ ActiveRecord::Schema.define(version: 20160202175933) do
     t.datetime "updated_at"
   end
 
+  create_table "match_strengths", force: :cascade do |t|
+    t.integer  "strength"
+    t.integer  "ingredient_id"
+    t.integer  "theme_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "match_strengths", ["ingredient_id"], name: "index_match_strengths_on_ingredient_id", using: :btree
+  add_index "match_strengths", ["theme_id"], name: "index_match_strengths_on_theme_id", using: :btree
+
   create_table "quantities", force: :cascade do |t|
     t.string   "amount"
     t.integer  "ingredient_id"
@@ -60,5 +71,11 @@ ActiveRecord::Schema.define(version: 20160202175933) do
 
   add_index "quantities", ["cocktail_id"], name: "index_quantities_on_cocktail_id", using: :btree
   add_index "quantities", ["ingredient_id"], name: "index_quantities_on_ingredient_id", using: :btree
+
+  create_table "themes", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

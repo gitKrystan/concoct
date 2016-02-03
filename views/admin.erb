@@ -1,12 +1,9 @@
 <div class="row">
-
-
-<h1>Admin Portal</h1>
-
+  <h1>Admin Portal</h1>
   <h4><a href="/ingredients/new">Add a new ingredient</a></h4>
-
 </div>
 <hr>
+<!-- Ingredient List -->
 <div class="row">
   <div class="col-sm-3">
     <h5>Edit Ingredients</h5>
@@ -15,6 +12,23 @@
         <% @ingredients.each do |ingredient| %>
           <li>
             <a href="/ingredients/<%= ingredient.id %>/edit"><%= ingredient.name %></a>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <!-- Cocktail List -->
+  <div class="col-sm-3">
+    <h5>Edit Cocktails</h5>
+    <% if @cocktails.any? %>
+      <ul class="nav nav-pills nav-stacked">
+        <% @cocktails.each do |cocktail| %>
+          <li>
+            <form class="form-inline" action="/cocktails/<%= cocktail.id %>" method="post">
+              <a href="/cocktails/<%= cocktail.id %>/edit"><%= cocktail.name %></a>
+              <button type="submit" class="btn btn-link" name="_method" value="delete">(remove)</button>
+            </form>
           </li>
         <% end %>
       </ul>

@@ -77,7 +77,7 @@
         <% end %>
       </ul>
     <% else %>
-      <h5>No categories currently added.</h5>
+      <h5>No complimentary ingredients currently added.</h5>
     <% end %>
   </div>
 
@@ -96,9 +96,27 @@
         <% end %>
       </ul>
     <% else %>
-      <h5>No categories to add.</h5>
-      <h5>Go to <a href="/admin">Admin Page</a> to add more categories.</h5>
+      <h5>No complimentary ingredients to add.</h5>
+      <h5>Go to <a href="/admin">Admin Page</a> to add more complimentary ingredients.</h5>
     <% end %>
+  </div>
+</div>
+
+<hr>
+<!-- Add Themes List -->
+
+<div class="row">
+  <div class="col-sm-5 add-theme-list">
+    <h5>Add Themes:</h5>
+    <form action="/ingredients/<%= @ingredient.id %>/themes" method="post">
+      <% Theme.all.each do |theme|%>
+        <div class="form-group form-inline">
+          <input type="text" class="form-control" name="<%= theme.name %>" id="" placeholder="Enter Point Value">
+          <label><%= theme.name%></label>
+        </div>
+      <% end %>
+      <button type="submit" class="btn btn-sm btn-default">Enter Values</button>
+    </form>
   </div>
 </div>
 
