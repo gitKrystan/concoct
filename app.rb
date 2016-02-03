@@ -37,7 +37,7 @@ end
 get '/cocktails/:id' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @ingredients = @cocktail.ingredients
+  @recipe_entries = @cocktail.recipe_entries
   erb :cocktail
 end
 
@@ -89,8 +89,8 @@ patch '/cocktails/:id' do
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
 
-  strength = params[:strength].to_i
-  sweetness = params[:sweetness].to_i
+  strength = params[:strength].to_f
+  sweetness = params[:sweetness].to_f
 
   recipe_entries = cocktail.recipe_entries
 
@@ -106,9 +106,20 @@ patch '/cocktails/:id' do
     category_count = category_counts[category.id]
     if category_count > 0
       default_amount = category.default_amount
-      # preference_modifier = changes based on strength or sweetness depending on what the category is
-      # adjusted_amount = default_amount * preference_modifier / category_count
-      adjusted_amount = default_amount / category_count
+      modifier_type = category.modifier
+      case modifier_type
+      when 'strength positive'
+        preference_modifier = strength * default_amount
+      when 'strength negative'
+        preference_modifier =  -strength * default_amount
+      when 'sweetness positive'
+        preference_modifier = sweetness * default_amount
+      when 'sweetness negative'
+        preference_modifier = -sweetness * default_amount
+      else
+        preference_modifier = 0
+      end
+      adjusted_amount = [(default_amount + preference_modifier) / category_count, 0.25].max
       entry.update(amount: adjusted_amount)
     end
   end
@@ -252,7 +263,7 @@ helpers do
     html
   end
 
-  def ingredient_entry(ingredient, amount)
+  def entry_generator(ingredient, amount)
     "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
   end
 
