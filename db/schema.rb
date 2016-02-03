@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203163420) do
+ActiveRecord::Schema.define(version: 20160203192825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20160203163420) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unit",           default: "oz"
+    t.float    "default_amount", default: 1.0
+    t.string   "modifier"
   end
 
   create_table "categories_ingredients", force: :cascade do |t|

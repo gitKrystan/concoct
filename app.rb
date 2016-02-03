@@ -37,7 +37,7 @@ end
 get '/cocktails/:id' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @ingredients = @cocktail.ingredients
+  @recipe_entries = @cocktail.recipe_entries
   erb :cocktail
 end
 
@@ -89,18 +89,39 @@ patch '/cocktails/:id' do
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
 
-  strength = params[:strength].to_i
-  sweetness = params[:sweetness].to_i
+  strength = params[:strength].to_f
+  sweetness = params[:sweetness].to_f
 
-  # recipe_entries = cocktail.recipe_entries
-  # recipe_entries.each do |entry|
-  #   category = entry.category
-  #   default = category.default
-  # end
+  recipe_entries = cocktail.recipe_entries
 
-  ingredients = cocktail.ingredients
-  ingredients.each do |ingredient|
+  category_counts = {}
+  Category.all.each do |category|
+    category_id = category.id
+    category_count = recipe_entries.where(category_id: category_id).count
+    category_counts[category_id] = category_count
+  end
 
+  recipe_entries.each do |entry|
+    category = entry.category
+    category_count = category_counts[category.id]
+    if category_count > 0
+      default_amount = category.default_amount
+      modifier_type = category.modifier
+      case modifier_type
+      when 'strength positive'
+        preference_modifier = strength * default_amount
+      when 'strength negative'
+        preference_modifier =  -strength * default_amount
+      when 'sweetness positive'
+        preference_modifier = sweetness * default_amount
+      when 'sweetness negative'
+        preference_modifier = -sweetness * default_amount
+      else
+        preference_modifier = 0
+      end
+      adjusted_amount = [(default_amount + preference_modifier) / category_count, 0.25].max
+      entry.update(amount: adjusted_amount)
+    end
   end
 
   redirect "/cocktails/#{id}"
@@ -108,14 +129,10 @@ end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
-  @ingredients = Ingredient.all().order(:name)
-  @cocktails = Cocktail.all().order(:name)
+  @ingredients = Ingredient.order(:name)
+  @cocktails = Cocktail.order(:name)
+  @categories = Category.order(:name)
   erb :admin
-end
-
-get '/ingredients' do
-  @ingredients = Ingredient.all
-  erb :ingredients
 end
 
 # CREATE ingredient
@@ -218,6 +235,23 @@ delete '/cocktails/:id' do
   redirect "/admin"
 end
 
+# EDIT categories
+get '/categories/:id/edit' do
+  @category = Category.find(params[:id])
+  erb :category_edit
+end
+
+patch '/categories/:id' do
+  category = Category.find(params[:id])
+  category.update({
+    default_amount: params[:default_amount],
+    unit: params[:unit],
+    modifier: params[:modifier]
+    })
+  flash[:success] = "Successfully updated category."
+  redirect "/admin"
+end
+
 helpers do
   def options(list, param_name, class_additions = nil)
     html = "<select class='form-control #{class_additions}' name='#{param_name}'>\n \
@@ -229,7 +263,7 @@ helpers do
     html
   end
 
-  def ingredient_entry(ingredient, amount)
+  def entry_generator(ingredient, amount)
     "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
   end
 

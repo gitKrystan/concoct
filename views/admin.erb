@@ -34,6 +34,19 @@
       </ul>
     <% end %>
   </div>
+
+  <div class="col-sm-3">
+    <h5>Edit Categories</h5>
+    <% if @categories.any? %>
+      <ul class="nav nav-pills nav-stacked">
+        <% @categories.each do |category| %>
+          <li>
+            <a href="/categories/<%= category.id %>/edit"><%= category.name %></a>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 </div>
 
 <hr>

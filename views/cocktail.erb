@@ -1,5 +1,5 @@
 <h1><%= @cocktail.name %></h1>
 
-<% @ingredients.each do |ingredient| %>
-  <%= ingredient_entry(ingredient.name, "1 oz") %>
+<% @recipe_entries.each do |entry| %>
+  <%= entry_generator(entry.ingredient.name, entry.amount) %>
 <% end %>
