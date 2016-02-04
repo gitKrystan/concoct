@@ -72,7 +72,11 @@ def create_ingredient_2
 end
 
 def create_category
-  Category.create(name: "Primary" )
+  Category.create({
+    name: "Primary",
+    default_amount: 1,
+    modifier: "strength positive"
+    })
 end
 
 def create_test_cocktail

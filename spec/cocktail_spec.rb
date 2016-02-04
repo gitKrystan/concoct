@@ -36,4 +36,19 @@ describe(Cocktail) do
       expect(test_cocktail.recipe_entries).to(eq([test_entry]))
     end
   end
+
+  describe('#add_theme') do
+    it('associates a theme with a recipe based on ingredients') do
+      test_cocktail = create_test_cocktail()
+      test_theme = Theme.create(name: 'test_theme')
+      test_ingredient = create_ingredient
+      test_cocktail.ingredients << test_ingredient
+      test_ingredient.match_strengths.create({
+        theme_id: test_theme.id,
+        strength: 10
+        })
+      test_cocktail.add_theme
+      expect(test_cocktail.theme).to(eq(test_theme))
+    end
+  end
 end

@@ -15,6 +15,23 @@ class Category < ActiveRecord::Base
     Category.find_by(name: name.capitalize).id
   end
 
+  def preference_modifier(strength, sweetness)
+    default_amount = self.default_amount
+    modifier_type = self.modifier
+    case modifier_type
+    when 'strength positive'
+      return strength * default_amount
+    when 'strength negative'
+      return -strength * default_amount
+    when 'sweetness positive'
+      return sweetness * default_amount
+    when 'sweetness negative'
+      return -sweetness * default_amount
+    else
+      return 0
+    end
+  end
+
 private
 
   def capitalize
