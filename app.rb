@@ -37,7 +37,23 @@ end
 get '/cocktails/:id' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @recipe_entries = @cocktail.recipe_entries
+  recipe_entries = @cocktail.recipe_entries
+  primary_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Primary'))
+  secondary_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Secondary'))
+  sweet_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Sweetener'))
+  acid_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Acid'))
+  mixer_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Mixer'))
+  aromatic_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Aromatic'))
+  @garnish_entries = recipe_entries
+    .where(category_id: Category.find_id_by_name('Garnish'))
+  @stir_in_entries = primary_entries + secondary_entries + sweet_entries \
+    + acid_entries + mixer_entries + aromatic_entries
   erb :cocktail
 end
 
@@ -119,7 +135,8 @@ patch '/cocktails/:id' do
       else
         preference_modifier = 0
       end
-      adjusted_amount = [(default_amount + preference_modifier) / category_count, 0.25].max
+      adjusted_amount = (default_amount + preference_modifier) / category_count
+      adjusted_amount = [adjusted_amount.round_to_nearest_quarter, 0.25].max
       adjusted_amount = adjusted_amount.to_rational_string
       entry_amount = "#{adjusted_amount} #{category.unit}"
       entry.update(amount: entry_amount)
@@ -266,7 +283,24 @@ helpers do
   end
 
   def entry_generator(entry)
-    "<h5>#{entry.amount} #{entry.ingredient.name}</h5>" unless entry.ingredient.nil?
+    unless entry.ingredient.nil?
+      "<dt> \
+        #{entry.amount} \
+      </dt> \
+      <dd> \
+        #{entry.ingredient.name} \
+      </dd>"
+    end
+  end
+
+  def garnish_entry_generator(entry)
+    unless entry.ingredient.nil?
+      "<dt> \
+      </dt> \
+      <dd> \
+        <p>#{entry.ingredient.name}</p> \
+      </dd>"
+    end
   end
 
   def add_ingredients(cocktail, params)

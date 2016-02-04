@@ -16,3 +16,27 @@ footer, .push {
 Sticky Footer by Ryan Fait
 http://ryanfait.com/
 */
+
+/* Description list is being used for ingredient lists */
+
+.ingredient-list dt {
+	font-weight: 400;
+}
+
+.ingredient-list dd {
+	font-weight: 700;
+}
+
+@media (min-width: 768px) {
+	.ingredient-list dd, .ingredient-list dt {
+		line-height: 2;
+	}
+
+	.dl-horizontal .ingredient-list dt {
+		width: 100px;
+	}
+
+	.dl-horizontal .ingredient-list dd {
+		margin-left: 110px;
+	}
+}

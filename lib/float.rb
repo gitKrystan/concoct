@@ -15,4 +15,8 @@ class Float
       integer_component.to_s
     end
   end
+
+  def round_to_nearest_quarter
+    (self / 0.25).round * 0.25
+  end
 end

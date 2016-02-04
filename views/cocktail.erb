@@ -1,5 +1,34 @@
 <h1><%= @cocktail.name %></h1>
 
-<% @recipe_entries.each do |entry| %>
-  <%= entry_generator(entry) %>
+<% if @stir_in_entries.any? %>
+  <div class="row">
+    <div class="col-md-3">
+      <dl class="dl-horizontal ingredient-list">
+      <% @stir_in_entries.each do |entry| %>
+        <%= entry_generator(entry) %>
+      <% end %>
+      </dl>
+    </div>
+    <div class="col-md-3">
+      Combine these ingredients in your favorite glass and stir.
+    </div>
+  </div>
 <% end %>
+
+<% if @stir_in_entries.any? %>
+  <hr>
+  <div class="row">
+    <div class="col-md-3">
+      <dl class="dl-horizontal ingredient-list">
+        <% @garnish_entries.each do |entry| %>
+          <%= garnish_entry_generator(entry) %>
+        <% end %>
+      </dl>
+    </div>
+    <div class="col-md-3">
+      Garnish with these ingredients and enjoy!
+    </div>
+  </div>
+<% end %>
+
+<hr>
