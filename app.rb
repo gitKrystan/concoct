@@ -54,6 +54,7 @@ get '/cocktails/:id' do
     .where(category_id: Category.find_id_by_name('Garnish'))
   @stir_in_entries = primary_entries + secondary_entries + sweet_entries \
     + acid_entries + mixer_entries + aromatic_entries
+    @rating = @cocktail.average_score
   erb :cocktail
 end
 
@@ -77,6 +78,16 @@ get '/cocktails/:id/edit' do
   @garnish = Category.ingredients_by('Garnish') & combo_ingredients
   @aromatic = Category.ingredients_by('Aromatic') & combo_ingredients
   erb :cocktail_form
+end
+
+post '/cocktails/:id/ratings' do
+  cocktail = Cocktail.find(params[:id].to_s)
+  if CocktailRating.create(:cocktail_id => cocktail.id, :score => params[:score].to_s).errors.any?
+    flash[:warning] = "Must Enter a number to rate drink"
+  else
+    flash[:success] = "Thank you for rating \"#{cocktail.name}\""
+  end
+  redirect "/cocktails/#{cocktail.id}"
 end
 
 post '/cocktails/:id/ingredients' do
@@ -284,11 +295,13 @@ helpers do
       ingredient_id = param[1].to_i
       if ingredient_id > 0
         category_id = param[0].to_i
-        return cocktail.recipe_entries.create({
+        cocktail.recipe_entries.create({
           ingredient_id: ingredient_id,
           category_id: category_id
           })
+        break
       end
     end
+    cocktail.add_theme
   end
 end

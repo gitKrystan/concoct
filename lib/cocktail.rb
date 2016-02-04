@@ -2,6 +2,7 @@ class Cocktail < ActiveRecord::Base
   has_many :recipe_entries, :dependent => :destroy
   has_many :ingredients, through: :recipe_entries
   has_many :categories, through: :recipe_entries
+  has_many :cocktail_ratings
   belongs_to :theme
 
   validates :name, presence: true
@@ -25,10 +26,25 @@ class Cocktail < ActiveRecord::Base
     end
 
     # determine which theme_strength is the strongest
-    strongest_theme_id = match_strengths.max_by{|k,v| v}[0]
+    strongest_theme_id = match_strengths
+      .max_by{|k,v| v}[0] unless match_strengths.empty?
 
     # and update cocktail with that theme
-    
+    self.update(theme_id: strongest_theme_id)
+  end
+
+  def theme_style
+    theme = self.theme
+    "theme-#{theme.downcase}" unless theme.nil?
+  end
+
+  def average_score
+    @total = 0
+    return nil if self.cocktail_ratings.empty?
+    self.cocktail_ratings.each do |rating|
+      @total += rating.score
+    end
+    return (@total.fdiv(self.cocktail_ratings.length)).round(1)
   end
 
 private
