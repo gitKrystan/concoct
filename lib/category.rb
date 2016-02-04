@@ -12,7 +12,7 @@ class Category < ActiveRecord::Base
   end
 
   def self.find_id_by_name(name)
-    Category.find_by(name: name.capitalize).order(:name).id
+    Category.find_by(name: name.capitalize).id
   end
 
 private
