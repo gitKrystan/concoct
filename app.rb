@@ -221,7 +221,7 @@ end
 
 post '/ingredients/:id/themes' do
   ingredient = Ingredient.find(params[:id].to_i)
-  MatchStrength.create_strength_values(params[:id].to_i, params)
+  MatchStrength.create_update_strength_values(params[:id].to_i, params)
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
