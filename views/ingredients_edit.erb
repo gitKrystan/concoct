@@ -106,19 +106,29 @@
 <!-- Add Themes List -->
 
 <div class="row">
-  <div class="col-sm-5 add-theme-list">
+  <div class="col-sm-4 add-theme-list">
     <h5>Add Themes:</h5>
-    <form action="/ingredients/<%= @ingredient.id %>/themes" method="post">
-      <% Theme.all.each do |theme|%>
-        <div class="form-group form-inline">
-          <input type="text" class="form-control" name="<%= theme.name %>" id="" placeholder="Enter Point Value">
-          <label><%= theme.name%></label>
+    <form id="strength" action="/ingredients/<%= @ingredient.id %>/themes" method="post">
+      <% Theme.all.each_with_index do |theme, index|%>
+        <div class="form-group form-inline" >
+          <input name="<%= theme.name %>" type="range" min="0" max="100" step="10" value="<%= @ingredient.value(theme.id) %>" onchange="showValue(this.value, <%= index %>)"/>
+          <span class="theme-value"><%= @ingredient.value(theme.id) %></span>
+          <label><%= theme.name %></label>
         </div>
       <% end %>
-      <button type="submit" class="btn btn-sm btn-default">Enter Values</button>
+
+      <div class="total"></div>
+
+      <button type="submit" class="btn btn-sm btn-primary value-btn" disabled="disabled">Enter Values</button>
     </form>
   </div>
+  <!-- number counter -->
+  <div class="col-sm-3 col-sm-offset-2">
+    <h4>Point Value (must equal: 100)</h4>
+    <h3 id="numbers"></h3>
+  </div>
 </div>
+
 
 <hr>
 <h4>Delete Ingredient</h4>
