@@ -39,4 +39,11 @@ http://ryanfait.com/
 	.dl-horizontal .ingredient-list dd {
 		margin-left: 110px;
 	}
+
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
 }
