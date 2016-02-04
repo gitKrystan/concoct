@@ -284,11 +284,13 @@ helpers do
       ingredient_id = param[1].to_i
       if ingredient_id > 0
         category_id = param[0].to_i
-        return cocktail.recipe_entries.create({
+        cocktail.recipe_entries.create({
           ingredient_id: ingredient_id,
           category_id: category_id
           })
+        break
       end
     end
+    cocktail.add_theme
   end
 end

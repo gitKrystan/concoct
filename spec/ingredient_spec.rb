@@ -45,4 +45,16 @@ describe(Ingredient) do
       expect(test_ingredient.cocktails).to(eq([test_cocktail]))
     end
   end
+
+  describe('#primary_theme') do
+    it('associates a theme with a ingredient based on its most prominent theme') do
+      test_theme = Theme.create(name: 'test_theme')
+      test_ingredient = create_ingredient
+      test_ingredient.match_strengths.create({
+        theme_id: test_theme.id,
+        strength: 10
+        })
+      expect(test_ingredient.primary_theme).to(eq(test_theme))
+    end
+  end
 end
