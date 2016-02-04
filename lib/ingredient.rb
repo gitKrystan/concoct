@@ -15,6 +15,15 @@ class Ingredient < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  def match_strength_hash
+    match_strength_hash = {}
+    match_strengths = self.match_strengths
+    match_strengths.each do |match|
+      match_strength_hash.store(match.theme_id, match.strength)
+    end
+    match_strength_hash
+  end
+
   def value(theme_id)
     value = self.match_strengths.empty? ? 0 : self.match_strengths.find_by_theme_id(theme_id).strength
   end
