@@ -118,29 +118,7 @@ patch '/cocktails/:id' do
   end
 
   recipe_entries.each do |entry|
-    category = entry.category
-    category_count = category_counts[category.id]
-    if category_count > 0
-      default_amount = category.default_amount
-      modifier_type = category.modifier
-      case modifier_type
-      when 'strength positive'
-        preference_modifier = strength * default_amount
-      when 'strength negative'
-        preference_modifier =  -strength * default_amount
-      when 'sweetness positive'
-        preference_modifier = sweetness * default_amount
-      when 'sweetness negative'
-        preference_modifier = -sweetness * default_amount
-      else
-        preference_modifier = 0
-      end
-      adjusted_amount = (default_amount + preference_modifier) / category_count
-      adjusted_amount = [adjusted_amount.round_to_nearest_quarter, 0.25].max
-      adjusted_amount = adjusted_amount.to_rational_string
-      entry_amount = "#{adjusted_amount} #{category.unit}"
-      entry.update(amount: entry_amount)
-    end
+    entry.adjust_amount(category_counts, strength, sweetness)
   end
 
   redirect "/cocktails/#{id}"
