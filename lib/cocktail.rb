@@ -2,6 +2,7 @@ class Cocktail < ActiveRecord::Base
   has_many :recipe_entries, :dependent => :destroy
   has_many :ingredients, through: :recipe_entries
   has_many :categories, through: :recipe_entries
+  has_many :cocktail_ratings
   belongs_to :theme
 
   validates :name, presence: true
@@ -28,7 +29,7 @@ class Cocktail < ActiveRecord::Base
     strongest_theme_id = match_strengths.max_by{|k,v| v}[0]
 
     # and update cocktail with that theme
-    
+
   end
 
 private

@@ -54,6 +54,7 @@ get '/cocktails/:id' do
     .where(category_id: Category.find_id_by_name('Garnish'))
   @stir_in_entries = primary_entries + secondary_entries + sweet_entries \
     + acid_entries + mixer_entries + aromatic_entries
+    @rating = nil
   erb :cocktail
 end
 
@@ -77,6 +78,12 @@ get '/cocktails/:id/edit' do
   @garnish = Category.ingredients_by('Garnish') & combo_ingredients
   @aromatic = Category.ingredients_by('Aromatic') & combo_ingredients
   erb :cocktail_form
+end
+
+post '/cocktails/:id/ratings' do
+  cocktail = Cocktail.find(params[:id].to_s)
+  CocktailRating.create(:cocktail_id => cocktail.id, :score => params[:score].to_s)
+  redirect "/cocktails/#{cocktail.id}"
 end
 
 post '/cocktails/:id/ingredients' do
