@@ -25,10 +25,16 @@ class Cocktail < ActiveRecord::Base
     end
 
     # determine which theme_strength is the strongest
-    strongest_theme_id = match_strengths.max_by{|k,v| v}[0]
+    strongest_theme_id = match_strengths
+      .max_by{|k,v| v}[0] unless match_strengths.empty?
 
     # and update cocktail with that theme
-    
+    self.update(theme_id: strongest_theme_id)
+  end
+
+  def theme_style
+    theme = self.theme
+    "theme-#{theme.downcase}" unless theme.nil?
   end
 
 private

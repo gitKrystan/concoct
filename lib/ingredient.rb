@@ -24,6 +24,16 @@ class Ingredient < ActiveRecord::Base
     match_strength_hash
   end
 
+  def primary_theme
+    match_strengths = self.match_strength_hash
+    Theme.find(match_strengths.max_by{|k,v| v}[0]) unless match_strengths.empty?
+  end
+
+  def theme_style
+    theme = self.primary_theme
+    "theme-#{theme.downcase}" unless theme.nil?
+  end
+
   def value(theme_id)
     value = self.match_strengths.empty? ? 0 : self.match_strengths.find_by_theme_id(theme_id).strength
   end
