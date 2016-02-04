@@ -34,7 +34,7 @@ class Cocktail < ActiveRecord::Base
 
   def theme_style
     theme = self.theme
-    "theme-#{theme.downcase}" unless theme.nil?
+    "theme-#{theme.name.downcase}" unless theme.nil?
   end
 
 private
