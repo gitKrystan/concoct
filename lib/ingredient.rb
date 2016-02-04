@@ -15,6 +15,10 @@ class Ingredient < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  def value(theme_id)
+    value = self.match_strengths.empty? ? 0 : self.match_strengths.find_by_theme_id(theme_id).strength
+  end
+
   def self.find_unless_none(id)
     Ingredient.find(id.to_i) unless id == "None"
   end

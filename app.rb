@@ -179,9 +179,7 @@ end
 
 post '/ingredients/:id/themes' do
   ingredient = Ingredient.find(params[:id].to_i)
-  Theme.all.each do |theme|
-    MatchStrength.create(ingredient_id: params[:id].to_i, theme_id: theme.id, strength: params.fetch(theme.name))
-  end
+  MatchStrength.create_strength_values(params[:id].to_i, params)
   redirect "/ingredients/#{ingredient.id}/edit"
 end
 
