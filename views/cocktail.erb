@@ -32,3 +32,25 @@
 <% end %>
 
 <hr>
+
+<div class="row">
+  <div class="col-sm-4 add-theme-list">
+    <h5>Rate it</h5>
+    <form action="/cocktails/<%= @cocktail.id %>/ratings" method="post">
+      <select class="form-control" name="score">
+        <option value="" disabled selected>Select your rating</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <button type="submit" class="btn btn-sm btn-primary value-btn">Submit</button>
+    </form>
+  </div>
+</div>
+
+<div>
+  <%= @rating ? "Average Rating is" : "This drink has not been rated yet" %>
+  <%= @rating %>
+</div>
