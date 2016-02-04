@@ -22,4 +22,18 @@ describe(Cocktail) do
       expect(test_cocktail.ingredients).to(eq([test_ingredient]))
     end
   end
+
+  describe('#recipe_entries') do
+    it('returns a list of recipe entries for the cocktail') do
+      test_cocktail = create_test_cocktail()
+      test_ingredient = create_ingredient()
+      test_category = Category.create(name: "primary")
+      test_entry = test_cocktail.recipe_entries.create({
+        ingredient_id: test_ingredient.id,
+        category_id: test_category.id,
+        amount: "1 oz"
+        })
+      expect(test_cocktail.recipe_entries).to(eq([test_entry]))
+    end
+  end
 end

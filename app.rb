@@ -16,13 +16,13 @@ get '/cocktails/new' do
   @route = '/cocktails'
   @ingredients = []
   @cocktail = Cocktail.new
-  @primaries = Category.ingredients_by('Primary')
-  @secondaries = Category.ingredients_by('Secondary')
-  @sweeteners = Category.ingredients_by('Sweetener')
-  @acids = Category.ingredients_by('Acid')
-  @mixers = Category.ingredients_by('Mixer')
-  @garnishes = Category.ingredients_by('Garnish')
-  @aromatics = Category.ingredients_by('Aromatic')
+  @primary = Category.ingredients_by('Primary')
+  @secondary = Category.ingredients_by('Secondary')
+  @sweetener = Category.ingredients_by('Sweetener')
+  @acid = Category.ingredients_by('Acid')
+  @mixer = Category.ingredients_by('Mixer')
+  @garnish = Category.ingredients_by('Garnish')
+  @aromatic = Category.ingredients_by('Aromatic')
   erb :cocktail_form
 end
 
@@ -37,7 +37,7 @@ end
 get '/cocktails/:id' do
   id = params[:id].to_i
   @cocktail = Cocktail.find(id)
-  @ingredients = @cocktail.ingredients
+  @recipe_entries = @cocktail.recipe_entries
   erb :cocktail
 end
 
@@ -53,13 +53,13 @@ get '/cocktails/:id/edit' do
     combo_ingredients = ingredient.ingredients & combo_ingredients
   end
 
-  @primaries = Category.ingredients_by('Primary') & combo_ingredients
-  @secondaries = Category.ingredients_by('Secondary') & combo_ingredients
-  @sweeteners = Category.ingredients_by('Sweetener') & combo_ingredients
-  @acids = Category.ingredients_by('Acid') & combo_ingredients
-  @mixers = Category.ingredients_by('Mixer') & combo_ingredients
-  @garnishes = Category.ingredients_by('Garnish') & combo_ingredients
-  @aromatics = Category.ingredients_by('Aromatic') & combo_ingredients
+  @primary = Category.ingredients_by('Primary') & combo_ingredients
+  @secondary = Category.ingredients_by('Secondary') & combo_ingredients
+  @sweetener = Category.ingredients_by('Sweetener') & combo_ingredients
+  @acid = Category.ingredients_by('Acid') & combo_ingredients
+  @mixer = Category.ingredients_by('Mixer') & combo_ingredients
+  @garnish = Category.ingredients_by('Garnish') & combo_ingredients
+  @aromatic = Category.ingredients_by('Aromatic') & combo_ingredients
   erb :cocktail_form
 end
 
@@ -89,12 +89,39 @@ patch '/cocktails/:id' do
   cocktail = Cocktail.find(id)
   cocktail.update(name: params[:name])
 
-  strength = params[:strength].to_i
-  sweetness = params[:sweetness].to_i
+  strength = params[:strength].to_f
+  sweetness = params[:sweetness].to_f
 
-  ingredients = cocktail.ingredients
-  ingredients.each do |ingredient|
+  recipe_entries = cocktail.recipe_entries
 
+  category_counts = {}
+  Category.all.each do |category|
+    category_id = category.id
+    category_count = recipe_entries.where(category_id: category_id).count
+    category_counts[category_id] = category_count
+  end
+
+  recipe_entries.each do |entry|
+    category = entry.category
+    category_count = category_counts[category.id]
+    if category_count > 0
+      default_amount = category.default_amount
+      modifier_type = category.modifier
+      case modifier_type
+      when 'strength positive'
+        preference_modifier = strength * default_amount
+      when 'strength negative'
+        preference_modifier =  -strength * default_amount
+      when 'sweetness positive'
+        preference_modifier = sweetness * default_amount
+      when 'sweetness negative'
+        preference_modifier = -sweetness * default_amount
+      else
+        preference_modifier = 0
+      end
+      adjusted_amount = [(default_amount + preference_modifier) / category_count, 0.25].max
+      entry.update(amount: adjusted_amount)
+    end
   end
 
   redirect "/cocktails/#{id}"
@@ -102,14 +129,10 @@ end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
-  @ingredients = Ingredient.all().order(:name)
-  @cocktails = Cocktail.all().order(:name)
+  @ingredients = Ingredient.order(:name)
+  @cocktails = Cocktail.order(:name)
+  @categories = Category.order(:name)
   erb :admin
-end
-
-get '/ingredients' do
-  @ingredients = Ingredient.all
-  erb :ingredients
 end
 
 # CREATE ingredient
@@ -210,10 +233,27 @@ delete '/cocktails/:id' do
   redirect "/admin"
 end
 
+# EDIT categories
+get '/categories/:id/edit' do
+  @category = Category.find(params[:id])
+  erb :category_edit
+end
+
+patch '/categories/:id' do
+  category = Category.find(params[:id])
+  category.update({
+    default_amount: params[:default_amount],
+    unit: params[:unit],
+    modifier: params[:modifier]
+    })
+  flash[:success] = "Successfully updated category."
+  redirect "/admin"
+end
+
 helpers do
   def options(list, param_name, class_additions = nil)
     html = "<select class='form-control #{class_additions}' name='#{param_name}'>\n \
-      <option>None</option>"
+      <option value='0'>None</option>"
     list.each do |item|
       html << "<option value='#{item.id}'>#{item.name}</option>"
     end
@@ -221,25 +261,20 @@ helpers do
     html
   end
 
-  def ingredient_entry(ingredient, amount)
+  def entry_generator(ingredient, amount)
     "<h5>#{amount} #{ingredient}</h5>" unless ingredient.nil?
   end
 
   def add_ingredients(cocktail, params)
-    primary = Ingredient.find_unless_none(params[:primary])
-    secondary = Ingredient.find_unless_none(params[:secondary])
-    sweetener = Ingredient.find_unless_none(params[:sweetener])
-    acid = Ingredient.find_unless_none(params[:acid])
-    mixer = Ingredient.find_unless_none(params[:mixer])
-    garnish = Ingredient.find_unless_none(params[:garnish])
-    aromatic = Ingredient.find_unless_none(params[:aromatic])
-
-    cocktail.ingredients << primary unless primary.nil?
-    cocktail.ingredients << secondary unless secondary.nil?
-    cocktail.ingredients << sweetener unless sweetener.nil?
-    cocktail.ingredients << acid unless acid.nil?
-    cocktail.ingredients << mixer unless mixer.nil?
-    cocktail.ingredients << garnish unless garnish.nil?
-    cocktail.ingredients << aromatic unless aromatic.nil?
+    params.each do |param|
+      ingredient_id = param[1].to_i
+      if ingredient_id > 0
+        category_id = param[0].to_i
+        return cocktail.recipe_entries.create({
+          ingredient_id: ingredient_id,
+          category_id: category_id
+          })
+      end
+    end
   end
 end

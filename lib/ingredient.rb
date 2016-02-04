@@ -5,9 +5,9 @@ class Ingredient < ActiveRecord::Base
               join_table: :combinations,
               foreign_key: :ingredient_id,
               association_foreign_key: :complement_id
-  has_many :quantities
-  has_many :cocktails, through: :quantities
-  has_many :match_strengths
+  has_many :recipe_entries, :dependent => :destroy
+  has_many :cocktails, through: :recipe_entries
+  has_many :match_strengths, :dependent => :destroy
   has_many :themes, through: :match_strengths
 
   before_save(:capitalize)
@@ -20,7 +20,7 @@ class Ingredient < ActiveRecord::Base
   end
 
   def self.find_unless_none(id)
-    Ingredient.find(id.to_i) unless id == "None"
+    Ingredient.find(id.to_i) unless id == ""
   end
 
 private
