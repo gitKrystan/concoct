@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/themes.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+    <!-- Div to fade background colors -->
+    <div class="theme-fader <%= @cocktail.theme_style unless @cocktail.nil? %>"></div>
     <!-- Wrapper class necessary for sticky footer -->
 		<div class="container wrapper">
       <!-- <header class="page-header">
