@@ -10,7 +10,8 @@
 }
 
 body {
-	background: #17171B;
+	/*background: #17171B;*/
+	background: #2f2926;
 }
 
 html, body {
@@ -59,7 +60,7 @@ header a {
 }
 
 header a:hover {
-	color: #56C4B9;
+	color: #7e7878;
 }
 
 
@@ -72,7 +73,7 @@ header a:hover {
 	margin: 3.75px;
 	padding: 25px 0px;
 	border-radius: 5px;
-	color: #17171B;
+	color: #2f2926;
 }
 
 .ingredient-box h1:hover {
@@ -88,7 +89,6 @@ header a:hover {
 	padding: 0;
 }
 
-
 .theme-btn-container h3 {
 	color: #FEF8EB;
 	font-weight: 100;
@@ -100,7 +100,16 @@ header a:hover {
 	font-size: 1.35em;
 	}
 
+.ing-name {
+	font-size: 3.5em;
+	text-align: center;
+}
 
+.jumbotron {
+	background: #56C4B9;
+	color: #2f2926;
+
+}
 
 /*FOOTER*/
 
@@ -129,6 +138,16 @@ http://ryanfait.com/
 	background-color: #FEF8EB;
 }
 
+/*COCKTAIL PAGE*/
+.drink-details {
+	font-size: 1.5em;
+}
+
+.drink-instructions {
+	margin-left: 100px;
+	padding-top: 4px;
+}
+
 
 
 /*CUSTOM COCKTAIL BUTTON*/
@@ -154,14 +173,11 @@ http://ryanfait.com/
 .cocktailnew:hover {
 	color: #56C4B9;
 }
-/*.cocktailnew a:hover {
-	border-color: #56C4B9;
-}*/
 
 /*FORM STYLING*/
 
 .generate {
-	background-color: #17171B;
+	background-color: rgba(0, 0, 0, 0);
 	color: #fdeece;;
 	padding: 12px;
 	font-size: 20px;
@@ -172,22 +188,22 @@ http://ryanfait.com/
 
 .generate:focus {
 	outline: none;
-	background: #fdeece ;
+	background: #fdeece;
 }
 
 .generate:hover {
-	background-color: #fdeece;;
-	color: #17171B;
+	background-color: #fdeece;
+	color: #2f2926;
 }
 
 #name-concoction .well {
-	background-color: black;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 #name-concoction .well .btn {
 	background-color: #56C4B9;
 	border-color: #56C4B9;
-	color: black;
+	color: #2f2926;
 }
 
 .ingredientheader {
@@ -195,20 +211,15 @@ http://ryanfait.com/
 	color: #fdeece;
 }
 
-
 .ingredientsdiv li {
 	font-size: 20px;
 	list-style: none;
-
-
 }
 
 .ingredientsdiv .btn-link {
 	text-decoration: none;
 	color: #fdeece;
-
 }
-
 
 .ingredient-list dt {
 	font-weight: 400;
@@ -217,6 +228,13 @@ http://ryanfait.com/
 .ingredient-list dd {
 	font-weight: 700;
 }
+
+.add-theme-list button {
+	background: #fdeece;
+	color: #2f2926;
+}
+
+/*MEDIA QUERIES*/
 
 @media (min-width: 1200px) {
 	.container {
