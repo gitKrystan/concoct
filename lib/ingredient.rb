@@ -31,7 +31,7 @@ class Ingredient < ActiveRecord::Base
 
   def theme_style
     theme = self.primary_theme
-    "theme-#{theme.downcase}" unless theme.nil?
+    "theme-#{theme.name.downcase}" unless theme.nil?
   end
 
   def value(theme_id)

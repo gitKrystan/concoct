@@ -1,15 +1,4 @@
-
-
-  <h2 class="cocktailnew"><a href="/cocktails/new">Create a new cocktail</a></h2>
-
-
-
-
-<!-- <div class="row blah">
-  <h3>Browse Cocktails</h3>
-</div> -->
-
-
+<h2 class="cocktailnew"><a href="/cocktails/new">Create a new cocktail</a></h2>
 
 <!-- buttons for themes -->
 <% if @ingredients.any? %>
@@ -18,7 +7,7 @@
     <% @ingredients.each do |ingredient| %>
       <a href="/ingredients/<%= ingredient.id %>">
         <div class="col-sm-4">
-          <div class="ingredient-box">
+          <div class="ingredient-box <%= ingredient.theme_style %>">
             <h1><%= ingredient.name %></h1>
           </div>
         </div>
@@ -30,8 +19,3 @@
     <h1>No ingredients have been added!</h1>
   </div>
 <% end %>
-
-
-
- <!-- style="border: 1px solid red;" -->
-   <!-- style="border: 1px solid blue;" -->
