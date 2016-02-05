@@ -10,7 +10,7 @@
     <% @cocktails.each do |cocktail| %>
       <a href="/cocktails/<%= cocktail.id %>">
         <div class="col-sm-4">
-          <div class="ingredient-box">
+          <div class="ingredient-box <%= cocktail.theme_style %>">
             <h1><%= cocktail.name %></h1>
           </div>
         </div>
