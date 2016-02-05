@@ -1,9 +1,9 @@
-<h1>Pick Your Ingredients</h1>
+<h1 class="ingredientheader">Pick Your Ingredients</h1>
 
 <div class="row">
   <div class="col-sm-6">
     <form action="<%= @route %>" method="post">
-      <div class="form-group test">
+      <div class="form-group">
         <label for="primary">Add a primary liquor:</label>
         <%= options(@primary, Category.find_id_by_name("primary"), "select-auto-submit") %>
       </div>
@@ -35,6 +35,7 @@
   </div>
 
   <% if @ingredients.any? %>
+  <div class="ingredientsdiv">
     <div class="col-sm-6">
       <ul>
         <% @ingredients.each do |ingredient| %>
@@ -49,6 +50,7 @@
     </div>
   <% end %>
 </div>
+</div>
 
 <hr>
 
@@ -56,7 +58,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <button class="btn btn-sm btn-default" type="button"
+        <button class="btn btn-sm btn-default btn-block generate" type="button"
           data-toggle="collapse" data-target="#name-concoction">
           GENERATE CONCOCTION
         </button>

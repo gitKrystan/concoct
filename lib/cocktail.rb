@@ -38,6 +38,15 @@ class Cocktail < ActiveRecord::Base
     "theme-#{theme.name.downcase}" unless theme.nil?
   end
 
+  def average_score
+    @total = 0
+    return nil if self.cocktail_ratings.empty?
+    self.cocktail_ratings.each do |rating|
+      @total += rating.score
+    end
+    return (@total.fdiv(self.cocktail_ratings.length)).round(1)
+  end
+
 private
 
   def capitalize

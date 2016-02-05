@@ -28,7 +28,7 @@ feature "create a new cocktail" do
     click_button 'GENERATE CONCOCTION'
     fill_in 'name', :with => 'Newgarita'
     click_button 'Generate'
-    expect(page).to have_content 'Newgarita'
+    expect(page).to have_content 'NEWGARITA'
     expect(page).to have_content 'Tequila'
     expect(page).to have_content 'Cointreau'
     expect(page).to have_content 'Agave Nectar'
