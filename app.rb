@@ -10,7 +10,7 @@ get '/' do
   @ingredients = Category.ingredients_by('Primary')
   @themes = Theme.order(:name)
   @top_rated = []
-  Cocktail.order(:name).each do |cocktail|
+  Cocktail.list_all_in_order.each do |cocktail|
     rating = cocktail.average_score
     if rating && rating > 4.5
       @top_rated << cocktail
@@ -149,14 +149,14 @@ end
 get '/themes/:id' do
   id = params[:id].to_i
   @theme = Theme.find(id)
-  @cocktails = @theme.cocktails.order(:name)
+  @cocktails = @theme.cocktails.list_all_in_order
   erb :theme
 end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
 get '/admin' do
   @ingredients = Ingredient.order(:name)
-  @cocktails = Cocktail.order(:name)
+  @cocktails = Cocktail.list_all_in_order
   @categories = Category.order(:name)
   erb :admin
 end
@@ -180,7 +180,7 @@ end
 # READ ingredient
 get '/ingredients/:id' do
   @ingredient = Ingredient.find(params[:id].to_i)
-  @cocktails = @ingredient.cocktails.order(:name)
+  @cocktails = @ingredient.cocktails.list_all_in_order
   erb :ingredient
 end
 

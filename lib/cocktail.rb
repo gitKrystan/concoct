@@ -47,6 +47,10 @@ class Cocktail < ActiveRecord::Base
     return (@total.fdiv(self.cocktail_ratings.length)).round(1)
   end
 
+  def self.list_all_in_order
+    Cocktail.where.not(name: 'Temporary').order(:name)
+  end
+
 private
 
   def capitalize
