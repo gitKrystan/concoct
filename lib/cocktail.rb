@@ -47,6 +47,10 @@ class Cocktail < ActiveRecord::Base
     return (@total.fdiv(self.cocktail_ratings.length)).round(1)
   end
 
+  def rating_tally
+    return self.cocktail_ratings.empty? ? nil : self.cocktail_ratings.length
+  end
+
   def self.list_all_in_order
     Cocktail.where.not(name: 'Temporary').order(:name)
   end

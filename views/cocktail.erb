@@ -50,7 +50,11 @@
   </div>
 </div>
 
-<div>
+<div class="cocktail-rating">
   <%= @rating ? "Average Rating is" : "This drink has not been rated yet" %>
   <%= @rating %>
+</div>
+
+<div class="rating-counter">
+  <%= "This Cocktail has been rated #{@cocktail.rating_tally} times." unless @cocktail.rating_tally.nil? %>
 </div>
