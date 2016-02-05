@@ -100,9 +100,7 @@ header a:hover {
 	font-size: 1.35em;
 	}
 
-.test {
-	background: #000;
-}
+
 
 /*FOOTER*/
 
@@ -120,6 +118,17 @@ http://ryanfait.com/
 */
 
 /* Description list is being used for ingredient lists */
+
+
+.select-auto-submit {
+	background: #000;
+	border: none;
+	border-bottom: 2px solid #fff;
+	border-radius: 0px;
+	box-shadow: none;
+	background-color: #FEF8EB;
+}
+
 
 
 /*CUSTOM COCKTAIL BUTTON*/
@@ -142,12 +151,64 @@ http://ryanfait.com/
 	color: #FEF8EB;
 }
 
-.cocktailnew a:hover {
+.cocktailnew:hover {
 	color: #56C4B9;
 }
-.cocktailnew:hover {
+/*.cocktailnew a:hover {
 	border-color: #56C4B9;
+}*/
+
+/*FORM STYLING*/
+
+.generate {
+	background-color: #17171B;
+	color: #fdeece;;
+	padding: 12px;
+	font-size: 20px;
+	font-family: 'Roboto';
+	font-weight: 300;
+	border: 1.5px solid #FEF8EB;
 }
+
+.generate:focus {
+	outline: none;
+	background: #fdeece ;
+}
+
+.generate:hover {
+	background-color: #fdeece;;
+	color: #17171B;
+}
+
+#name-concoction .well {
+	background-color: black;
+}
+
+#name-concoction .well .btn {
+	background-color: #56C4B9;
+	border-color: #56C4B9;
+	color: black;
+}
+
+.ingredientheader {
+	padding-bottom: 15px;
+	color: #fdeece;
+}
+
+
+.ingredientsdiv li {
+	font-size: 20px;
+	list-style: none;
+
+
+}
+
+.ingredientsdiv .btn-link {
+	text-decoration: none;
+	color: #fdeece;
+
+}
+
 
 .ingredient-list dt {
 	font-weight: 400;
