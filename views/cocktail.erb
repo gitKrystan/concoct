@@ -2,14 +2,14 @@
 
 <% if @stir_in_entries.any? %>
   <div class="row drink-details">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <dl class="dl-horizontal ingredient-list">
       <% @stir_in_entries.each do |entry| %>
         <%= entry_generator(entry) %>
       <% end %>
       </dl>
     </div>
-    <div class="col-md-4 drink-instructions">
+    <div class="col-md-6 drink-instructions">
       Combine these ingredients in your favorite glass and stir.
     </div>
   </div>
@@ -18,14 +18,14 @@
 <% if @garnish_entries.any? %>
   <hr>
   <div class="row drink-details">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <dl class="dl-horizontal ingredient-list">
         <% @garnish_entries.each do |entry| %>
           <%= garnish_entry_generator(entry) %>
         <% end %>
       </dl>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6 drink-instructions">
       Garnish with these ingredients and enjoy!
     </div>
   </div>
