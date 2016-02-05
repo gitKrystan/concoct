@@ -93,7 +93,7 @@ end
 post '/cocktails/:id/ratings' do
   cocktail = Cocktail.find(params[:id].to_s)
   if CocktailRating.create(:cocktail_id => cocktail.id, :score => params[:score].to_s).errors.any?
-    flash[:warning] = "Must Enter a number to rate drink"
+    flash[:warning] = "Must enter a number to rate drink"
   else
     flash[:success] = "Thank you for rating \"#{cocktail.name}\""
   end
@@ -272,7 +272,7 @@ patch '/categories/:id' do
     unit: params[:unit],
     modifier: params[:modifier]
     })
-  flash[:success] = "Successfully updated category."
+  flash[:success] = "Successfully updated category"
   redirect "/admin"
 end
 

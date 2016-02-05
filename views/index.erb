@@ -53,11 +53,11 @@
   <!-- BY RATING -->
   <% if @top_rated.any? && @browse == "Rating" %>
     <div>
-      <% @top_rated.each do |ingredient| %>
-        <a href="/ingredients/<%= ingredient.id %>">
+      <% @top_rated.each do |cocktail| %>
+        <a href="/cocktails/<%= cocktail.id %>">
           <div class="col-sm-4">
-            <div class="ingredient-box <%= ingredient.theme_style %>">
-              <h1><%= ingredient.name %></h1>
+            <div class="ingredient-box <%= cocktail.theme_style %>">
+              <h1><%= cocktail.name %></h1>
             </div>
           </div>
         </a>
