@@ -1,11 +1,12 @@
-<h1><%= @theme.name %></h1>
+<h1 class="ing-name"><%= @theme.name %></h1>
 
 <% if @cocktails.any? %>
-  <div class="row">
+  <div class="row theme-btn-container">
+    <h3>Cocktails that contain <%= @theme.name %>:</h3>
     <% @cocktails.each do |cocktail| %>
       <a href="/cocktails/<%= cocktail.id %>">
         <div class="col-sm-4">
-          <div class="well cocktail-box">
+          <div class="ingredient-box">
             <h1><%= cocktail.name %></h1>
           </div>
         </div>
@@ -14,6 +15,6 @@
   </div>
 <% else %>
   <div class="jumbotron">
-    <h1>No cocktails have been added!</h1>
+    <h1>No cocktails match your criteria!</h1>
   </div>
 <% end %>

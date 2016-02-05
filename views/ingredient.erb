@@ -1,6 +1,5 @@
 <h1 class="ing-name"><%= @ingredient.name %></h1>
 
-
 <% if @cocktails.any? %>
   <div class="row theme-btn-container">
     <h3>Cocktails that contain <%= @ingredient.name %>:</h3>
@@ -16,6 +15,6 @@
   </div>
 <% else %>
   <div class="jumbotron">
-    <h1>No cocktails have been added!</h1>
+    <h1>No cocktails match your criteria!</h1>
   </div>
 <% end %>
