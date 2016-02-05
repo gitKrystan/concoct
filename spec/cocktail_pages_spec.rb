@@ -17,7 +17,7 @@ feature "create a new cocktail" do
 
   scenario "allows the user to create a new cocktail based on their selections", :js => true do
     visit '/'
-    click_link 'Create a new cocktail'
+    click_link 'Create your own custom cocktail'
     select 'Applejack', :from => Category.find_id_by_name("primary").to_s
     click_button 'remove'
     select 'Tequila', :from => Category.find_id_by_name("primary").to_s
