@@ -35,21 +35,21 @@
   </div>
 
   <% if @ingredients.any? %>
-  <div class="ingredientsdiv">
-    <div class="col-sm-6">
-      <ul>
-        <% @ingredients.each do |ingredient| %>
-          <li>
-            <form action="/cocktails/<%= @cocktail.id %>/ingredients/<%= ingredient.id %>" method="post">
-              <label for="remove"><%= ingredient.name %></label>
-              <button class="btn btn-link" type="submit" name="_method" value="delete">remove</button>
-            </form>
-          </li>
-        <% end %>
-      </ul>
+    <div class="ingredientsdiv">
+      <div class="col-sm-6">
+        <ul>
+          <% @ingredients.each do |ingredient| %>
+            <li>
+              <form action="/cocktails/<%= @cocktail.id %>/ingredients/<%= ingredient.id %>" method="post">
+                <label for="remove"><%= ingredient.name %></label>
+                <button class="btn btn-link" type="submit" name="_method" value="delete">remove</button>
+              </form>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
-</div>
 </div>
 
 
@@ -91,7 +91,8 @@
                 <input required class="form-control" type="text" name="name" placeholder="Name">
                 <span class="input-group-btn">
                   <button class="btn btn-primary" type="submit"
-                    name="_method" value="patch">Generate</button>
+                    name="_method" value="patch">Generate
+                  </button>
                 </span>
               </div>
             </div>

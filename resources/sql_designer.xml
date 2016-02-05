@@ -51,7 +51,24 @@
 <part>id</part>
 </key>
 </table>
-<table x="703" y="267" name="categories">
+<table x="661" y="420" name="categories">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="default_amount" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="modifier" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="667" y="271" name="themes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -62,18 +79,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="636" y="639" name="themes">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
-<datatype>VARCHAR</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="377" y="236" name="categories_ingredients">
+<table x="366" y="416" name="categories_ingredients">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -89,7 +95,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="370" y="607" name="match_strength">
+<table x="393" y="247" name="match_strength">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -108,7 +114,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1023" y="72" name="ratings">
+<table x="1147" y="67" name="ratings">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -119,7 +125,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="792" y="72" name="cocktails_ratings">
+<table x="867" y="68" name="cocktails_ratings">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -135,7 +141,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="386" y="457" name="combinations">
+<table x="348" y="763" name="combinations">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -151,8 +157,11 @@
 <part>id</part>
 </key>
 </table>
-<table x="400" y="31" name="recipe_entries">
+<table x="389" y="18" name="recipe_entries">
 <row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="id_themes" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="id_cocktails" null="1" autoincrement="0">
@@ -165,8 +174,7 @@
 </row>
 <row name="id_categories" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="categories" row="id" />
-</row>
+<default>NULL</default></row>
 <row name="amount" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -174,13 +182,17 @@
 <part>id</part>
 </key>
 </table>
-<table x="606" y="56" name="cocktails">
+<table x="663" y="66" name="cocktails">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
+<row name="id_themes" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="themes" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

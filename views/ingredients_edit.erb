@@ -1,21 +1,23 @@
 <div class="row">
   <!-- Ingredient Name -->
-  <h3><%= @ingredient.name %></h3>
-  <form action="/ingredients/<%= @ingredient.id %>" method="post">
-    <input type="hidden" name="_method" value="patch">
-    <div class="row">
-      <!-- Ingredient Name -->
-      <div class="form-group col-sm-6">
-        <label for="ingredient_name">Edit Ingredient Name</label>
-        <input type="text" class="form-control" name="ingredient_name" value="<%= @ingredient.name %>">
+  <div class="col-sm-6">
+    <h3><%= @ingredient.name %></h3>
+    <form action="/ingredients/<%= @ingredient.id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <div class="row">
+        <!-- Ingredient Name -->
+        <div class="form-group col-sm-6">
+          <label for="ingredient_name">Edit Ingredient Name</label>
+          <input type="text" class="form-control" name="ingredient_name" value="<%= @ingredient.name %>">
+        </div>
       </div>
-    </div>
 
-    <!-- Submit Button -->
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-  </form>
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 
@@ -143,4 +145,7 @@
 <hr>
 <a href="/ingredients/new">
   <button class="btn btn-default">Add Another Ingredient</button>
+</a>
+<a href="/admin">
+  <button class="btn btn-default">See all ingredients</button>
 </a>
