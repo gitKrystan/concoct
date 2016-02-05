@@ -100,6 +100,7 @@ delete '/cocktails/:cocktail_id/ingredients/:ingredient_id' do
   ingredient_id = params[:ingredient_id].to_i
   ingredient = Ingredient.find(ingredient_id)
   cocktail.ingredients.delete(ingredient)
+  cocktail.add_theme
   if cocktail.ingredients.length > 0
     redirect "/cocktails/#{id}/edit"
   else
