@@ -167,7 +167,10 @@ footer a {
 	padding-top: 4px;
 }
 
-
+.cocktail-rating {
+	margin: 10px 0;
+	font-size: 2em;
+}
 
 /*CUSTOM COCKTAIL BUTTON*/
 
