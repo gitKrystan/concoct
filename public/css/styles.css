@@ -26,6 +26,14 @@ html, body {
 
 /*LINKS*/
 
+.admin a {
+	color: #5fbbb1;
+}
+
+.admin button {
+	color: #5fbbb1;
+}
+
 a {
 	text-decoration: none;
 }
@@ -60,16 +68,19 @@ header a {
 }
 
 header a:hover {
-	color: #7e7878;
+	color: #fdeece;
 }
 
+.under-header {
+	height: 110px;
+}
 
 
 /*BUTTON GRID*/
 
 .ingredient-box {
 	text-align: center;
-	background: #56C4B9;
+	background: #5fbbb1;
 	margin: 3.75px;
 	padding: 25px 0px;
 	border-radius: 5px;
@@ -101,13 +112,16 @@ header a:hover {
 	}
 
 .ing-name {
+	font-weight: 100;
 	font-size: 3.5em;
 	text-align: center;
+	margin: 0;
+	padding: 0;
 }
 
 .jumbotron {
-	background: #56C4B9;
-	color: #2f2926;
+	background: #2f2926 ;
+	color: #FEF8EB;
 
 }
 
@@ -201,8 +215,8 @@ http://ryanfait.com/
 }
 
 #name-concoction .well .btn {
-	background-color: #56C4B9;
-	border-color: #56C4B9;
+	background-color: #5fbbb1;
+	border-color: #5fbbb1;
 	color: #2f2926;
 }
 
