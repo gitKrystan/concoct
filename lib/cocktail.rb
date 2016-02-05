@@ -10,17 +10,25 @@ class Cocktail < ActiveRecord::Base
   before_save(:capitalize)
 
   def add_theme
+    primaries = Category.ingredients_by('Primary')
+    garnishes = Category.ingredients_by('Garnish')
     match_strengths = {}
 
     ingredients = self.ingredients
     ingredients.each do |ingredient|
       ingredient_match_strengths = ingredient.match_strength_hash
-
+      if primaries.include?(ingredient)
+        modifier = 2
+      elsif garnishes.include?(ingredient)
+        modifier = 0.5
+      else
+        modifier = 1
+      end
       # add up theme_strengths to the theme_strengths hash
       ingredient_match_strengths.each do |theme_id, ingredient_theme_strength|
         if ingredient_theme_strength > 0
           previous_strength = match_strengths[theme_id] || 0
-          match_strengths[theme_id] = previous_strength + ingredient_theme_strength
+          match_strengths[theme_id] = previous_strength + (ingredient_theme_strength * modifier)
         end
       end
     end
