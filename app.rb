@@ -8,6 +8,16 @@ enable :sessions #for flash to work
 # USER INTERFACE ROUTES
 get '/' do
   @ingredients = Category.ingredients_by('Primary')
+  @themes = Theme.order(:name)
+  @top_rated = []
+  Cocktail.order(:name).each do |cocktail|
+    rating = cocktail.average_score
+    if rating && rating > 4.5
+      @top_rated << cocktail
+    end
+  end
+  @browse = params[:browse]
+  @browse ||= "Theme"
   erb :index
 end
 
@@ -54,7 +64,7 @@ get '/cocktails/:id' do
     .where(category_id: Category.find_id_by_name('Garnish'))
   @stir_in_entries = primary_entries + secondary_entries + sweet_entries \
     + acid_entries + mixer_entries + aromatic_entries
-    @rating = @cocktail.average_score
+  @rating = @cocktail.average_score
   erb :cocktail
 end
 
@@ -134,6 +144,13 @@ patch '/cocktails/:id' do
   end
 
   redirect "/cocktails/#{id}"
+end
+
+get '/themes/:id' do
+  id = params[:id].to_i
+  @theme = Theme.find(id)
+  @cocktails = @theme.cocktails.order(:name)
+  erb :theme
 end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients

@@ -1,21 +1,64 @@
 <h2 class="cocktailnew"><a href="/cocktails/new">Create a new cocktail</a></h2>
 
 <!-- buttons for themes -->
-<% if @ingredients.any? %>
-  <div class="row theme-btn-container">
-    <h3>Browse by Theme:</h3>
-    <% @ingredients.each do |ingredient| %>
-      <a href="/ingredients/<%= ingredient.id %>">
-        <div class="col-sm-4">
-          <div class="ingredient-box <%= ingredient.theme_style %>">
-            <h1><%= ingredient.name %></h1>
+
+<div class="row theme-btn-container">
+  <h3>
+    Browse by
+    <div class="btn-group">
+      <button type="button" class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= @browse %> <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="?browse=Theme">Theme</a></li>
+        <li><a href="?browse=Ingredient">Ingredient</a></li>
+        <li><a href="?browse=Rating">Top Rated</a></li>
+      </ul>
+    </div>
+  </h3>
+
+  <!-- BY THEME -->
+  <% if @themes.any? && @browse == "Theme" %>
+    <div>
+      <% @themes.each do |theme| %>
+        <a href="/themes/<%= theme.id %>">
+          <div class="col-sm-4">
+            <div class='ingredient-box <%= "theme-#{theme.name.downcase}" %>'>
+              <h1><%= theme.name %></h1>
+            </div>
           </div>
-        </div>
-      </a>
-    <% end %>
-  </div>
-<% else %>
-  <div class="jumbotron">
-    <h1>No ingredients have been added!</h1>
-  </div>
-<% end %>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- BY INGREDIENT -->
+  <% if @ingredients.any? && @browse == "Ingredient" %>
+    <div>
+      <% @ingredients.each do |ingredient| %>
+        <a href="/ingredients/<%= ingredient.id %>">
+          <div class="col-sm-4">
+            <div class="ingredient-box <%= ingredient.theme_style %>">
+              <h1><%= ingredient.name %></h1>
+            </div>
+          </div>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- BY RATING -->
+  <% if @top_rated.any? && @browse == "Rating" %>
+    <div>
+      <% @top_rated.each do |ingredient| %>
+        <a href="/ingredients/<%= ingredient.id %>">
+          <div class="col-sm-4">
+            <div class="ingredient-box <%= ingredient.theme_style %>">
+              <h1><%= ingredient.name %></h1>
+            </div>
+          </div>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+</div>
