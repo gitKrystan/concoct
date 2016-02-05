@@ -2,7 +2,7 @@
 
 <% if @stir_in_entries.any? %>
   <div class="row drink-details">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <dl class="dl-horizontal ingredient-list">
       <% @stir_in_entries.each do |entry| %>
         <%= entry_generator(entry) %>
@@ -18,14 +18,14 @@
 <% if @garnish_entries.any? %>
   <hr>
   <div class="row drink-details">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <dl class="dl-horizontal ingredient-list">
         <% @garnish_entries.each do |entry| %>
           <%= garnish_entry_generator(entry) %>
         <% end %>
       </dl>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       Garnish with these ingredients and enjoy!
     </div>
   </div>
