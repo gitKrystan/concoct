@@ -11,7 +11,7 @@
 
 body {
 	/*background: #17171B;*/
-	background: #2f2926;
+	background: #242120;
 }
 
 html, body {
@@ -35,6 +35,7 @@ html, body {
 }
 
 a {
+	color: #FEF8EB;
 	text-decoration: none;
 }
 
@@ -84,7 +85,7 @@ header a:hover {
 	margin: 3.75px;
 	padding: 25px 0px;
 	border-radius: 5px;
-	color: #2f2926;
+	color: #242120;
 }
 
 .ingredient-box h1:hover {
@@ -120,7 +121,7 @@ header a:hover {
 }
 
 .jumbotron {
-	background: #2f2926 ;
+	background: #242120 ;
 	color: #FEF8EB;
 
 }
@@ -140,6 +141,13 @@ Sticky Footer by Ryan Fait
 http://ryanfait.com/
 */
 
+
+footer p,
+footer a {
+	display: inline;
+	color: #777;
+}
+
 /* Description list is being used for ingredient lists */
 
 
@@ -158,7 +166,6 @@ http://ryanfait.com/
 }
 
 .drink-instructions {
-	margin-left: 100px;
 	padding-top: 4px;
 }
 
@@ -167,7 +174,6 @@ http://ryanfait.com/
 /*CUSTOM COCKTAIL BUTTON*/
 
 .cocktailnew  {
-	display: block;
 	margin: auto;
 	max-width: 100%;
 	text-align: center;
@@ -175,6 +181,10 @@ http://ryanfait.com/
 	padding: 30px;
 	border: 2px solid #FEF8EB;
 	border-radius: 5px;
+
+	font-family: 'Roboto';
+	text-transform: uppercase;
+	font-weight: 100;
 }
 
 .cocktailnew a {
@@ -185,8 +195,19 @@ http://ryanfait.com/
 }
 
 .cocktailnew:hover {
-	color: #56C4B9;
+	border: 2px solid #ec6244;
+	color: #ec6244;
 }
+
+
+.theme-btn-container button {
+	color: #FEF8EB;
+}
+
+.theme-btn-container button:hover {
+	color: #FEF8EB;
+}
+
 
 /*FORM STYLING*/
 
@@ -198,6 +219,7 @@ http://ryanfait.com/
 	font-family: 'Roboto';
 	font-weight: 300;
 	border: 1.5px solid #FEF8EB;
+	border-radius: 4px;
 }
 
 .generate:focus {
@@ -207,7 +229,7 @@ http://ryanfait.com/
 
 .generate:hover {
 	background-color: #fdeece;
-	color: #2f2926;
+	color: #242120;
 }
 
 #name-concoction .well {
@@ -215,9 +237,14 @@ http://ryanfait.com/
 }
 
 #name-concoction .well .btn {
-	background-color: #5fbbb1;
-	border-color: #5fbbb1;
-	color: #2f2926;
+	background-color: rgba(0, 0, 0, 0);
+	border-color: #FEF8EB;
+	color: #242120;
+}
+#name-concoction .well .btn:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-color: #FEF8EB;
+	color: #FEF8EB;
 }
 
 .ingredientheader {
@@ -244,8 +271,17 @@ http://ryanfait.com/
 }
 
 .add-theme-list button {
-	background: #fdeece;
-	color: #2f2926;
+	background-color: rgba(0, 0, 0, 0);
+	padding: 8px 12px;
+	border-color: #FEF8EB;
+	color: #FEF8EB;
+}
+
+.add-theme-list button:hover {
+	background-color: #FEF8EB;
+	padding: 8px 12px;
+	border-color: #242120;
+	color: #242120;
 }
 
 /*MEDIA QUERIES*/
@@ -268,6 +304,7 @@ http://ryanfait.com/
 	.dl-horizontal .ingredient-list dd {
 		margin-left: 110px;
 	}
+}
 
 .green {
 	color: green;
