@@ -60,7 +60,7 @@ header a {
 }
 
 header a:hover {
-	color: #56C4B9;
+	color: #7e7878;
 }
 
 
@@ -177,7 +177,7 @@ http://ryanfait.com/
 /*FORM STYLING*/
 
 .generate {
-	background-color: #2f2926;
+	background-color: rgba(0, 0, 0, 0);
 	color: #fdeece;;
 	padding: 12px;
 	font-size: 20px;
@@ -197,7 +197,7 @@ http://ryanfait.com/
 }
 
 #name-concoction .well {
-	background-color: #2f2926;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 #name-concoction .well .btn {
