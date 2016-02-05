@@ -1,7 +1,7 @@
 <h1><%= @cocktail.name %></h1>
 
 <% if @stir_in_entries.any? %>
-  <div class="row">
+  <div class="row drink-details">
     <div class="col-md-3">
       <dl class="dl-horizontal ingredient-list">
       <% @stir_in_entries.each do |entry| %>
@@ -9,7 +9,7 @@
       <% end %>
       </dl>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4 drink-instructions">
       Combine these ingredients in your favorite glass and stir.
     </div>
   </div>
@@ -17,7 +17,7 @@
 
 <% if @garnish_entries.any? %>
   <hr>
-  <div class="row">
+  <div class="row drink-details">
     <div class="col-md-3">
       <dl class="dl-horizontal ingredient-list">
         <% @garnish_entries.each do |entry| %>
@@ -36,7 +36,7 @@
 <div class="row">
   <div class="col-sm-4 add-theme-list">
     <h5>Rate it</h5>
-    <form action="/cocktails/<%= @cocktail.id %>/ratings" method="post">
+    <form class="form-inline" action="/cocktails/<%= @cocktail.id %>/ratings" method="post">
       <select class="form-control" name="score">
         <option value="" disabled selected>Select your rating</option>
         <option>1</option>
