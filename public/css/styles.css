@@ -35,7 +35,7 @@ html, body {
 }
 
 a {
-	color: #FEF8EB;
+	color: ##5fbbb1;
 	text-decoration: none;
 }
 
@@ -69,7 +69,7 @@ header a {
 }
 
 header a:hover {
-	color: #fdeece;
+	color: #fef8eb;
 }
 
 .under-header {
@@ -84,16 +84,19 @@ header a:hover {
 	background: #5fbbb1;
 	margin: 3.75px;
 	padding: 25px 0px;
-	border-radius: 5px;
+	border-radius: 4px;
 	color: #242120;
 }
 
-.ingredient-box h1:hover {
+.ingredient-box:hover {
 	color: #FEF8EB;
+	-webkit-box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.3);
+	box-shadow: 3px 3px 5px 1px rgba(0,0,0,0.3);
 }
 
 .theme-btn-container {
-	margin-top: 5%;
+	margin-top: 3%;
 	padding: 0 12px;
 }
 
@@ -120,10 +123,14 @@ header a:hover {
 	padding: 0;
 }
 
+.theme-btn-container button {
+	height: 20px;
+	margin-top: -7px;
+}
+
 .jumbotron {
 	background: #242120 ;
 	color: #FEF8EB;
-
 }
 
 /*FOOTER*/
@@ -151,18 +158,9 @@ footer a {
 /* Description list is being used for ingredient lists */
 
 
-.select-auto-submit {
-	background: #000;
-	border: none;
-	border-bottom: 2px solid #fff;
-	border-radius: 0px;
-	box-shadow: none;
-	background-color: #FEF8EB;
-}
-
 /*COCKTAIL PAGE*/
 .drink-details {
-	font-size: 1.5em;
+	font-size: 1.25em;
 }
 
 .drink-instructions {
@@ -174,14 +172,14 @@ footer a {
 /*CUSTOM COCKTAIL BUTTON*/
 
 .cocktailnew  {
+	color: #FEF8EB;
 	margin: auto;
 	max-width: 100%;
 	text-align: center;
 	font-size: 2.5em;
 	padding: 30px;
 	border: 2px solid #FEF8EB;
-	border-radius: 5px;
-
+	border-radius: 4px;
 	font-family: 'Roboto';
 	text-transform: uppercase;
 	font-weight: 100;
@@ -211,9 +209,14 @@ footer a {
 
 /*FORM STYLING*/
 
+.btn-link {
+	color: #5fbbb1;
+	padding-left: 0;
+}
+
 .generate {
 	background-color: rgba(0, 0, 0, 0);
-	color: #fdeece;;
+	color: #fef8eb;
 	padding: 12px;
 	font-size: 20px;
 	font-family: 'Roboto';
@@ -224,11 +227,11 @@ footer a {
 
 .generate:focus {
 	outline: none;
-	background: #fdeece;
+	background: #fef8eb;
 }
 
 .generate:hover {
-	background-color: #fdeece;
+	background-color: #fef8eb;
 	color: #242120;
 }
 
@@ -249,7 +252,7 @@ footer a {
 
 .ingredientheader {
 	padding-bottom: 15px;
-	color: #fdeece;
+	color: #fef8eb;
 }
 
 .ingredientsdiv li {
@@ -258,16 +261,17 @@ footer a {
 }
 
 .ingredientsdiv .btn-link {
+	border: 0px;
 	text-decoration: none;
-	color: #fdeece;
+	color: #fef8eb;
 }
 
 .ingredient-list dt {
-	font-weight: 400;
+	font-weight: 100;
 }
 
 .ingredient-list dd {
-	font-weight: 700;
+	font-weight: 400;
 }
 
 .add-theme-list button {
@@ -284,6 +288,19 @@ footer a {
 	color: #242120;
 }
 
+/*FLASH ALERTS*/
+
+.alert-success, .alert-danger {
+	padding: 5px;
+	color: #242120;
+}
+
+.alert-success, .alert-danger h3 {
+	margin: 10px;
+	font-family: 'Roboto';
+	font-weight: 300;
+}
+
 /*MEDIA QUERIES*/
 
 @media (min-width: 1200px) {
@@ -297,12 +314,12 @@ footer a {
 		line-height: 2;
 	}
 
-	.dl-horizontal .ingredient-list dt {
-		width: 100px;
+	.dl-horizontal dt {
+		width: 80px;
 	}
 
-	.dl-horizontal .ingredient-list dd {
-		margin-left: 110px;
+	.dl-horizontal dd {
+		margin-left: 95px;
 	}
 }
 
