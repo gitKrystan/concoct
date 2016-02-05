@@ -8,6 +8,9 @@ enable :sessions #for flash to work
 # USER INTERFACE ROUTES
 get '/' do
   @ingredients = Category.ingredients_by('Primary')
+  @themes = Theme.order(:name)
+  @browse = params[:browse]
+  @browse ||= "Theme"
   erb :index
 end
 
@@ -134,6 +137,13 @@ patch '/cocktails/:id' do
   end
 
   redirect "/cocktails/#{id}"
+end
+
+get '/themes/:id' do
+  id = params[:id].to_i
+  @theme = Theme.find(id)
+  @cocktails = @theme.cocktails.order(:name)
+  erb :theme
 end
 
 # ADMIN PORTAL ROUTES: CRUD for ingredients
