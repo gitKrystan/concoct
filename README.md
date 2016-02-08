@@ -1,5 +1,5 @@
 # CONCOCT  
-##### Week 5 - Ruby - Group Project for Epicodus  
+##### Feb. 5th, 2016 - Ruby - Group Project for Epicodus  
 ##### By - [Krystan Menne](https://github.com/gitKrystan), [Lauryn Davis](https://github.com/lryndavis), [Jeff Seymour](https://github.com/jeffsdev), [Mike Mahoney](https://github.com/Mahonmr)
 
 ## Description  
@@ -11,7 +11,8 @@
 * A custom recipe for the cocktail with the correct proportions of each liquor and ingredient is generated based on user specifications.
 * Rate cocktails.
 * Browse through cocktails by theme, ingredient, or rating  
-* Styling changes based on the theme values of ingredients in a cocktail.
+* Styling changes based on the theme values of ingredients in a cocktail.  
+
 ###### Admin-side ( /admin - in the URL ):  
 * View list of ingredients, cocktails, and drink categories that have been saved to the database.  
 * Add a new ingredient, and choose what other ingredients it pairs well with.
